@@ -27,6 +27,12 @@ The results obtained by our simulation performed with the Weather Research Forec
 ### [Level Set Implementation](/Level_Set_Implementation)
 The level-set is the mathematical core for calculating the spread of the fire.  The minimization of the loss func-tions is the process that actually solves the PDE and constitutesthe  main  load  for  the  CPU.  It  can  be  easily  accelerated  usingGPUs. The  model  was  implemented  using  the  low-level  interface of   the NeuralPDE.jl library which contains the necessarymethods for the generation of the training datasets and of theloss functions starting from the explicit form of the equations and the boundary conditions.
 
+
+<p align="center">
+  <img src="Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.pdf">
+</p>
+
+
 ### [Euler System Implementation](/Euler_System_Implementation)
 This is our attempt to implement the atmospherical model of WRF into neuralPDE, because it necessry if a couple model (which has an improved precision) is needed. Writing and solving the 7-equation Euler system in Julia wasreally challenging,  in fact at the moment we are not aware ofany publications where these techniques are yet applied to PDEsystems of such complexity.  Unfortunately, theNeuralPDElibrary is still unable to treat this kind of problem with stability,and often incurs errors due to internal divergence calculations.Despite  this,  we  have  been  able  to  obtain  convergence  of  theloss function, although it is not enough to present valid results.We contacted the authors of these libraries, that are still underdevelopment, and we are looking forward to contributing.
 
