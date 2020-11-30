@@ -10,7 +10,10 @@
   Physics-Informed Machine Learning Simulator for Wildfire Propagation
 </h1>
 
+The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting WRF-SFIRE simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs, in order to transform it into a real-time simulator for wildfire spread prediction. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package.  
+
 ### [Model Selection](/Model_Selection/README.md)
+A collection of our attempts a
 
 ### [Interpolation](/Interpolation/readme.md)
 
