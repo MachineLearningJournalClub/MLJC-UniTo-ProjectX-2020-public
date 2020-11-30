@@ -41,13 +41,13 @@ dt  = tmax/tMeshNum
 
 #Domain, fire position and shape
 
-shape      = ["zeroIsVertex","zeroIsCenter"]
+shape      = ["zeroIsVertex","zeroIsCenter"]   
 x0         = [5.0]      #Fire ingnition coordinates
 y0         = [5.0]
 xSpread    = [1.0]      #Fire shape factors
-ySpread    = [0.4]
+ySpread    = [0.7]
 tIgnition  = [10.0]      #Fire's time of ignition
-amplitude  = [2.5]#[(max(1.0,10*dx))*sqrt(xSpread[1]*ySpread[1])]   #Fire's initial spread (radius if circle)
+amplitude  = [2.5]      #Fire's initial spread (radius if circle)
 
 domainShape = shape[1]
 
@@ -65,16 +65,8 @@ elseif domainShape == shape[2]
            ys = -ywidth*0.5: dy : ywidth*0.5
 end
 
-#Operators
-#=
+#Terrain interpolation parameters
 
-fire_mountain_height=100.,     ! (m) ideal mountain height
- fire_mountain_start_x=900.,   ! (m) coord of start of the mountain from lower left corder (just like ignition)
- fire_mountain_start_y=1000.,   ! (m) coord of start of the mountain from lower left corder (just like ignition)
- fire_mountain_end_x=1400.,     ! (m) coord of end of the mountain from lower left corder (just like ignition)
- fire_mountain_end_y=1600.,     ! (m) coord of end of the mountain from lower left corder (just like ignition)
-
-=#
 p0 = 316.977
 p1 = -31.7087
 p2 = 42.2348
@@ -91,21 +83,31 @@ p12 = 1.79071
 p13 = 2.49292
 p14 = -0.231523
 
-#topography
-Dxz = 0
-Dyz = 0
+#Terrain gradient's components
+Dxz = 0.01*(p1 + 2*p2*x + 3*p3*x*x + 4*p4*x*x*x + 5*p5*x*x*x*x + p11*y + 2*p12*y*x + p13*y*y + 2*p14*y*y*x)
+Dyz = 0.01*(p6 + 2*p7*y + 3*p8*y*y + 4*p9*y*y*y + 5*p10*y*y*y*y + p11*x + p12*x*x + 2*p13*x*y + 2*p14*x*x*y)
 
-Uwind = [0.0, 0.0]  #wind vector + conversion m/s to ft/s
+#Domain discretization
+x_s     = [x for x in xs][1:end-1]
+y_s     = [y for y in ys][1:end-1]
+hgt(x,y) = 0.01*(p0 + p1*x + p2*x*x + p3*x*x*x + p4*x*x*x*x + p5*x*x*x*x*x + p6*y + p7*y*y + p8*y*y*y + p9*y*y*y*y + p10*y*y*y*y*y +
+           p11*x*y + p12*x*x*y + p13*x*y*y + p14*x*x*y*y)
+z_s     = [hgt(x,y) for x in x_s for y in y_s]
+z_s     = reshape(z_s,(500,500))
+          
+Plots.plot(x_s,y_s,z_s, st=:surface)    #terrain plot
+
+Uwind = [0.0, 0.0]  #wind vector
 
 gn   = (Dx(u(t,x,y,θ))^2 + Dy(u(t,x,y,θ))^2)^0.5 #gradient's norm
 ∇u   = [Dx(u(t,x,y,θ)), Dy(u(t,x,y,θ))]
 ∇z   = [Dxz,Dyz]
 n    = ∇u/gn              #normal versor
-normalized = 0 #((Uwind[1]*n[1] + Uwind[2]*n[2])^2)^0.5 #(((Uwind[1]*Dx(u(t,x,y,θ))) + (Uwind[2]*Dy(u(t,x,y,θ))))^2)^0.5/(Dx(u(t,x,y,θ))^2 + Dy(u(t,x,y,θ))^2)^0.5
+normalized = ((Uwind[1]*n[1] + Uwind[2]*n[2])^2)^0.5 #inner product between wind and normal vector
 
 ## FUEL PARAMETERS
 
-#Fuel parameters given by namelist.fire
+#Fuel parameters given by namelist.fire from WRF-Sfire
 windrf = [0.36, 0.36, 0.44,  0.55,  0.42,  0.44,  0.44, 0.36, 0.36, 0.36,  0.36,  0.43,  0.46, 1e-7]
 fgi    = [0.166, 0.897, 1.076, 2.468, 0.785, 1.345, 1.092, 1.121, 0.780, 2.694, 2.582, 7.749, 13.024, 1.e-7]
 fueldepthm = [0.305, 0.305, 0.762, 1.829, 0.61,  0.762, 0.762, 0.061, 0.061, 0.305, 0.305, 0.701, 0.914, 0.305]
@@ -136,23 +138,16 @@ h     = cmbcnst*2.6839192e-5    #J*m^-3 to BTU*ft^-3
 Mf    = fuelmc_g
 
 ## FIRE SPREAD RATE EQUATIONS
-#=r0 = 7
-river(x,y) = 1 - 1/(1 + exp(-(x - r0)*1000))
-river_s     = [river(x,y) for x in x_s for y in y_s]
-river_s     = reshape(river_s,(500,500))
-Plots.plot(x_s,y_s,river_s, st=:surface)
 
 river_1 = 1 - 1/(1 + exp(-(x - r0)*1000))=#
 tanϕ = sum(∇z.*n)
 βop  = 3.348*sigma^(-0.8189)        #from Rothermel, eq (37)
-
 U    = normalized                   #wind correction factor
 w0   = wl/(1 + Mf)
 ρb   = w0/δm                        #different from paper for units reasons
 β    = ρb/ρP
-
 ξ    = exp((0.792 + 0.618*sigma^0.5)*(β+0.1))/(192 + 0.25965*sigma)
-ηs   = 0.174*(SE^(-0.19))           #probably a typo in the paper
+ηs   = 0.174*(SE^(-0.19))           
 ηM   = 1 - 2.59*Mf/Mx + 5.11*(Mf/Mx)^2 - 3.52*(Mf/Mx)^3
 wn   = w0/(1 + ST)
 Γmax = (sigma^(1.5))/(495 + 0.594*sigma^(1.5))
@@ -169,10 +164,12 @@ R0   = IR*ξ/(ρb*ϵ*Qig)              #spread rate without wind
 ϕS   = 5.275*β^(-0.3)*tanϕ^2        #slope factor
 S    = fuel_scale*R0*(1 + ϕw + ϕS)         #fire spread rate
 
-eq = Dt(u(t,x,y,θ)) + S*gn ~ 0      #level set equation
+eq = Dt(u(t,x,y,θ)) + S*gn ~ 0      #LEVEL SET EQUATION
 
-initialCondition = min(max((((xScale*(x-x0[1]))^2)*xSpread[1] + ((yScale*(y-y0[1]))^2)*ySpread[1])^0.5 - amplitude[1], -1), 1)
-#=
+initialCondition = (((xScale*(x-x0[1]))^2)*xSpread[1] + ((yScale*(y-y0[1]))^2)*ySpread[1])^0.5 - amplitude[1]   #Distance from ignition
+ 
+#Multiple ignition points
+#=                  
 if length(x0) > 2
     for b = 2:length(x0)
         initialCondition = min(initialCondition, (((xScale*(x-x0[b]))^2)*xSpread[b] + ((yScale*(y-y0[b]))^2)*ySpread[b])^0.5 - amplitude[b])
@@ -180,38 +177,26 @@ if length(x0) > 2
 end
 =#
 
-x_s     = [x for x in xs][1:end-1]
-y_s     = [y for y in ys][1:end-1]
-zz(x,y) = min(max((((xScale*(x-x0[1]))^2)*xSpread[1] + ((yScale*(y-y0[1]))^2)*ySpread[1])^0.5 - amplitude[1], -1), 1)
-z_s     = [zz(x,y) for x in x_s for y in y_s]
-z_s     = reshape(z_s,(500,500))
-
-Plots.plot(x_s,y_s,z_s, st=:surface, levels = [0])
-
-
 bcs = [u(tIgnition[1],x,y,θ) ~ initialCondition]  #from literature
 
-
 ## NEURAL NETWORK
-n = 16
-maxIters = 3000
+n = 16   #neuron number
+maxIters = 3000     #number of iterations
 
-chain = FastChain(FastDense(3,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,1))
+chain = FastChain(FastDense(3,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,1))   #Neural network from Flux library
 
-q_strategy = NeuralPDE.QuadratureTraining(algorithm =CubaCuhre(),reltol=1e-8,abstol=1e-8,maxiters=100)
+q_strategy = NeuralPDE.QuadratureTraining(algorithm =CubaCuhre(),reltol=1e-8,abstol=1e-8,maxiters=100)  #Training strategy
 
 discretization = NeuralPDE.PhysicsInformedNN([dt,dx,dy],chain,strategy = q_strategy)
 
 
-indvars = [t,x,y]
-
-depvars = [u]
+indvars = [t,x,y]   #phisically independent variables
+depvars = [u]       #dependent (target) variable
 
 dim = length(domains)
+            
 losses = []
-
-
-cb = function (p,l)
+cb = function (p,l)     #loss function handling
     println("Current loss is: $l")
     append!(losses, l)
     return false
@@ -223,31 +208,29 @@ prob = discretize(pde_system, discretization)
 a_1 = time_ns()
 
 res = GalacticOptim.solve(prob, GalacticOptim.ADAM(0.08), cb = cb, maxiters=maxIters) #allow_f_increase = false,
-#=initθ = res.minimizer
 
-discretization2 = NeuralPDE.PhysicsInformedNN([dt,dx,dy],chain, initθ; strategy = q_strategy)
-initθ == discretization2.initθ
-prob2 = NeuralPDE.discretize(pde_system,discretization2)
-res2 = GalacticOptim.solve(prob2, GalacticOptim.ADAM(0.01), cb = cb, maxiters=5000)
-=#
 b_1 = time_ns()
 print(string("Training time = ",(b_1-a_1)/10^9))
 #initθ = res.minimizer
 
+pars = open(readdlm,"/Users/francescocalisto/Documents/FRANCESCO/ACADEMICS/Università/UNITO/ML/GitHub/ProjectX2020/Julia_implementation/LevelSetEq/Isom Creek/params_level_set_Isom_Creek.txt")
+pars
+
+phi = discretization.phi
+
 
 ##QUICK VISUALIZATION with tStepFactor = 5
-maxIters = 3000
 
-extrapolate  = true
-printBCSComp = true
+extrapolate  = false     #allows extrapolating values outside the original domain
+printBCSComp = true     #prints initial condition comparison and training loss plot
 
-tStepFactor = 2 #Used to tune the time scale, if =tMeshNum/tmax the time step is the unit time
-FPS = 5
+tStepFactor = 2 #Used to tune the time scale, if =tMeshNum/tmax the time step is the physical unit time
+FPS = 5     #GIF frame per second
 
 if extrapolate
-    timeFactor  = 1 #used to extrapolate the prediction outside the domain
-    xAxisFactor = 1. #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
-    yAxisFactor = 1.
+    timeFactor  = 2 #used to extrapolate the prediction outside the domain
+    xAxisFactor = 1.25 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
+    yAxisFactor = 1.25
 else
     timeFactor  = 1 #used to extrapolate the prediction outside the domain
     xAxisFactor = 1 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
@@ -263,58 +246,51 @@ elseif domainShape == shape[2]
 end
 ts = 1 : dt*tStepFactor : tmax*timeFactor
 
-u_predict = [reshape([first(phi([t,x,y],res.minimizer)) for x in xs for y in ys], (length(xs),length(ys))) for t in ts]
-
-outfile = "/Users/francescocalisto/Desktop/u_predict_isom/u_predict.txt"
+u_predict = [reshape([first(phi([t,x,y],pars)) for x in xs for y in ys], (length(xs),length(ys))) for t in ts]  #matrix of model's prediction
+outfile = "u_predict.txt"
 writedlm(outfile, u_predict)
-
-
 
 maxlim = maximum(maximum(u_predict[t]) for t = 1:length(ts))
 minlim = minimum(minimum(u_predict[t]) for t = 1:length(ts))
 
 
-result = @animate for time = 1:length(ts)
+result = @animate for time = 1:length(ts)   #Animation of the level set function
     Plots.plot(xs, ys, u_predict[time],st=:surface,camera=(30,30), zlim=(minlim,maxlim), clim=(minlim,maxlim),
                 title = string("ψ: max = ",round(maxlim, digits = 3)," min = ", round(minlim, digits = 3),"\\n t = ",
                 round((time - 1)/tMeshNum*tStepFactor*tmax, digits = 3)))
 end
-gif(result, "isom_creek_forensic_surface.gif", fps = FPS)
+gif(result, "isom_creek_surface_forensic.gif", fps = FPS)
 
-result_level = @animate for time = 1:length(ts)
+result_level = @animate for time = 1:length(ts)     #Animation of the level set contour at z=0
     Plots.contour(xs, ys, u_predict[time::Int], levels = [0], title = string("Fireline \\n t = ",
     round((time - 1)/tMeshNum*tStepFactor*tmax, digits = 3)), legend = false, size = (600,600))
 end
+gif(result_level, "isom_creek_contour_forensic.gif", fps = FPS)
+                                                
 
-gif(result_level, "isom_creek_forensic_contour.gif", fps = FPS)
-
-
-#
 if printBCSComp
     zbcs(x,y) = (((xScale*(x-x0[1]))^2)*xSpread[1] + ((yScale*(y-y0[1]))^2)*ySpread[1])^0.5 - amplitude[1]
 
     z_s = reshape([zbcs(x,y) for x in xs for y in ys], (length(xs),length(ys)))
     target = reshape(z_s, (length(xs),length(ys)))
     diff = (u_predict[end] - target).^2
-    MSE = sum(diff)/(length(xs)*length(ys))
+    MSE = sum(diff)/(length(xs)*length(ys))     #Mean square difference
 
     bcsPlot = Plots.plot(xs,ys,z_s, st=:surface,  title = "Initial Condition")    #camera=(30,30)
-
     bcsPredict = Plots.plot(xs, ys, u_predict[end],st=:surface, zlim=(minlim,maxlim), clim=(minlim,maxlim),
-        title = string("ψ: max = ",round(maxlim, digits = 3)," min = ", round(minlim, digits = 3),"\\n t = ",0))
+        title = string("ψ: max = ",round(maxlim, digits = 3)," min = ", round(minlim, digits = 3),"\\n t = ",0))    #initial condition prediction
 
-    bcsDiff = Plots.plot(xs,ys,diff, st=:surface,  title = string("MSE = ", MSE))
+    bcsDiff = Plots.plot(xs,ys,diff, st=:surface,  title = string("MSE = ", MSE))   #difference between prediction and target
 
-    bcsFirelinePredict = Plots.contour(xs, ys, u_predict[end], levels = [0], title = string(" Fireline \\n t = ", 0))
+    bcsFirelinePredict = Plots.contour(xs, ys, u_predict[end], levels = [0], title = string(" Fireline \\n t = ", 0)) #initial fireline prediction
 
-    bcsFireline = Plots.contour(xs, ys, z_s, levels = [0], title = "BCS fireline ignition")
+    bcsFireline = Plots.contour(xs, ys, z_s, levels = [0], title = "BCS fireline ignition")     #target initial fireline
 
     trainingPlot = Plots.plot(1:(maxIters + 1), losses, yaxis=:log, title = string("Training time = 270 s",
-        "\\n Iterations: ", maxIters, "   NN: 16>16>16"), ylabel = "log(loss)", legend = false)
+        "\\n Iterations: ", maxIters, "   NN: 16>16>16"), ylabel = "log(loss)", legend = false) #loss plot
 
-    bcsComparisonPlots = Plots.plot(bcsPlot, bcsPredict, bcsDiff, bcsFireline,bcsFirelinePredict, trainingPlot, size = (1500,600))
-    Plots.savefig("isom_creek_forensic_bcs_comparison.pdf")
-    #png(bcsComparisonPlots, "isom_creek_bcs_comparison")
+    bcsComparisonPlots = Plots.plot(bcsPlot, bcsPredict, bcsDiff, bcsFireline,bcsFirelinePredict, trainingPlot, size = (1500,600))  
+    Plots.savefig("isom_creek_bcs_comparison.pdf")
     bcsComparisonPlots
 end
 
