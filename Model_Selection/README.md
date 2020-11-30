@@ -8,12 +8,6 @@
 
 Following Chris Rackauckas' approach [[1]](#1), we reimplemented the following Lotka-Volterra equations, embedding the ODE into a neural network using Julia's library *DiffEqFlux*.
 
-The Lotka-Volterra equations, also called predator-prey equations, are a system of first-order nonlinear differential equations, describing the interaction between two species, usually one seen as a predator, the other as a prey.  
-
-<img src="https://latex.codecogs.com/svg.latex?\begin{align*}&space;&&space;\frac{\mathrm{d}&space;x&space;}{\mathrm{d}&space;t}&space;=&space;\alpha&space;x&space;-&space;\beta&space;x&space;y,&space;\\&space;&&space;\frac{\mathrm{d}&space;y&space;}{\mathrm{d}&space;t}&space;=&space;\delta&space;xy&space;-&space;\beta&space;x&space;y.&space;\end{align*}" title="\begin{align*} & \frac{\mathrm{d} x }{\mathrm{d} t} = \alpha x - \beta x y, \\ & \frac{\mathrm{d} y }{\mathrm{d} t} = \delta xy - \beta x y. \end{align*}" />
-
-&nbsp;
-
  ### [Neural ODE 1D](/Model_Selection/DiffEqFlux/NeuralODE1D%20DiffEqFlux.jl)
 
  ### Diffusion Equation:defining a 2-D reaction-diffusion equation. It describes combustion dynamics, similar to WRF-Fire equations.
