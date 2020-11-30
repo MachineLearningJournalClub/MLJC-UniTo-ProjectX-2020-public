@@ -16,7 +16,7 @@ NeuralPDE Architecture                           |  Standard Integration
 
 
 ### [Model Selection](/Model_Selection)
-A collection of our attempts to find a proper model which suites all of our needs. We have ex-plored different architectures within the field of Scientific Ma-chine Learning.  We started our investigations using the DiffE-qFlux.jllibrary, which defines and solves neural ordinarydifferential equations (i.e. ODEs where a neural network defines its derivative function)
+A collection of our attempts to find a proper model which suites all of our needs. We have explored different architectures within the field of Scientific Machine Learning.  We started our investigations using the DiffEqFlux.jllibrary, which defines and solves neural ordinary differential equations (i.e. ODEs where a neural network defines its derivative function). We finally chose [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) because does not require numerical solvers and is interfaced with the very high levels model representation library [ModelingToolkit.jl](https://github.com/SciML/ModelingToolkit.jl)
 
 ### [Interpolation](/BC_Interpolation)
 Some utility notebooks needed to implement key informations (terrain slope, wind field) in our model. It also provides better perfomances in terms of speed and computational load.
