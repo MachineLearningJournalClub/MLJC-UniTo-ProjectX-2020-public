@@ -12,7 +12,7 @@ expected in this situation is displayed by our model, as shown below.
   <img src="/Level_Set_Implementation/Examples/fireline.gif">
 </p>
 
-Unless otherwise stated, all simulations, referring to the same code for the implementation of the [level set One Fire](./Final Code/One Fire/level_set_OneFire.jl) have this hyper-parameters:
+Unless otherwise stated, all simulations, referring to the same code for the implementation of the [level set One Fire](/Level_Set_Implementation/Final%20Code/One%20Fire/level_set_OneFire.jl), have this hyper-parameters:
 
 ```julia
 n = 16
