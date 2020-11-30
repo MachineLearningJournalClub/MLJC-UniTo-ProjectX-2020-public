@@ -10,7 +10,7 @@ cut for our domain simulation, are accessible on the Google Drive, in the folder
 
 - Meteorological global datasets from GFS model, are provided by the Research Data Archive
  in the UCAR website (https://rda.ucar.edu/datasets/ds084.1/). We downloaded meteorological dataset 
-referring from 05 june 2020 at 12:00 PM, to 06 june 2020 at 12:00 PM.
+referring from 05 june 2020 at 00:00 AM, to 13 june 2020 at 12:00 PM.
 These datasets are accessible on the Google Drive, in the folder GFS 
 (https://drive.google.com/drive/u/0/folders/14jtfsnYTBgeepaq6Klc1iGIPgpNN6Qha)
 
