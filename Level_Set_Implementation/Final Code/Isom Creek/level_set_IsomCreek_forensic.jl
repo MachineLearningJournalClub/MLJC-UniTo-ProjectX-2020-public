@@ -322,7 +322,7 @@ for i = 3:20
     tensor_p = Plots.contour(tensor[:,:,Int(floor((8 + timel)))], levels = [0.01], tick = true, grid = true, size = (400,400), colorbar=false, color="red", label=["WRF output"],
             xlabel = "Space domain [m]", legend=true, title=string("Isom Creek Fire at t = ", ((8+timel)*15), " min"))
     pred_p   = Plots.contour!(xs, ys, u_predict[Int(floor(timel))], levels = [0], tick = true, grid = true, size = (400,400), color="blue", label=["PINNs output"], legend=true)
-    Plots.savefig(string("/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Visualization/Levelset isom creek/", i ,".png"))
+    Plots.savefig(string("/Visualization/Levelset isom creek/", i ,".png"))
 end
 
 
