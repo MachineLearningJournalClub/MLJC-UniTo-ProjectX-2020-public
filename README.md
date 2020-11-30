@@ -10,7 +10,7 @@
   Physics-Informed Machine Learning Simulator for Wildfire Propagation
 </h1>
 
-[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/blob/rel2/LICENSE.md)
 [![GitHub stars](https://img.shields.io/github/stars/Naereen/StrapDown.js.svg?style=social&label=Star&maxAge=2592000)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public)
 [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public)
 
