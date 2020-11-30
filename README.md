@@ -3,8 +3,8 @@
 <h1 align="center">
   Physics-Informed Machine Learning Simulator for Wildfire Propagation
 </h1>
-[Open research paper (PDF)](https://drive.google.com/file/d/1K8zP0biHoGtwM9tu3hLlw-tdoBXmkBgh/view)
-[![Generic badge](https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg)](https://shields.io/)
+
+[![Generic badge](https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg)](https://drive.google.com/file/d/1K8zP0biHoGtwM9tu3hLlw-tdoBXmkBgh/view)
 
 [![GitHub stars](https://img.shields.io/github/stars/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/stargazers/)
 
