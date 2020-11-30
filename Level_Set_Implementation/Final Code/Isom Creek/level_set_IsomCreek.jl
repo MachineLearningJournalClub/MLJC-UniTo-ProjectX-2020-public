@@ -213,7 +213,7 @@ b_1 = time_ns()
 print(string("Training time = ",(b_1-a_1)/10^9))
 #initθ = res.minimizer
 
-pars = open(readdlm,"/Users/francescocalisto/Documents/FRANCESCO/ACADEMICS/Università/UNITO/ML/GitHub/ProjectX2020/Julia_implementation/LevelSetEq/Isom Creek/params_level_set_Isom_Creek.txt")
+pars = open(readdlm,"/Julia_implementation/LevelSetEq/Isom Creek/params_level_set_Isom_Creek.txt") #to import parameters from previous training (change also line 249 accordingly)
 pars
 
 phi = discretization.phi
@@ -296,7 +296,7 @@ if printBCSComp
 end
 
 
-##IMPORT THE WRF OUTPUTS
+##IMPORT THE WRF OUTPUT
 
 tensor = readdlm("/Users/francescocalisto/Desktop/WRF_tensor_new/tensor_isom.txt")
 tensor = reshape(tensor, (1440,1440,73))
@@ -317,17 +317,7 @@ gif(gif_tensor, "WRF_out_one_fire.gif", fps = FPS)
 
                                                                 
 ##PLOTS OF COMPARISON BETWEEN WRF AND PINNS                                                                
-for i = 3:20
-    tensor_p = Plots.contour(tensor[:,:,i+8], levels = [0.01], tick = false, grid = false, size = (600,600))
-    pred_p   = Plots.contour!(xs, ys, u_predict[i], levels = [0], tick = false, grid = false, size = (600,600))
-    Plots.plot(tensor_p)
-    Plots.plot!(pred_p)
-    #Plots.savefig(tensor_p, string("/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Julia_implementation/LevelSetEq/WRF_tensor/wrf_isom_creek_tensor_",i,".png"))
-    #Plots.savefig(pred_p, string("/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Julia_implementation/LevelSetEq/level_set_final/level_set_isom_creek_final_",i,".png"))
-end
-
-timel = 4
-
+                                                                
 for i = 3:20
     timel = i
     tensor_p = Plots.contour(tensor[:,:,Int(floor((8 + timel)))], levels = [0.01], tick = true, grid = true, size = (400,400), colorbar=false, color="red", label=["WRF output"],
@@ -344,7 +334,7 @@ end
 ##SAVE PARAMETERS TO REPRODUCE THE SAME RESULTS WITHOUT TRAINING AGAIN
 param = initθ
 
-outfile = "/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Julia_implementation/LevelSetEq/Isom Creek/params_level_set_Isom_Creek.txt"
+outfile = "/Julia_implementation/LevelSetEq/Isom Creek/params_level_set_Isom_Creek.txt"
 open(outfile, "w") do f
   for i in param
     println(f, i)
