@@ -1,3 +1,26 @@
+#___  ____       ___ _____   _   _       _ _
+#|  \/  | |     |_  /  __ \ | | | |     (_| |
+#| .  . | |       | | /  \/ | | | |_ __  _| |_ ___
+#| |\/| | |       | | |     | | | | '_ \| | __/ _ \
+#| |  | | |___/\__/ | \__/\ | |_| | | | | | || (_) |
+#_______\_____\____/ \____/  _____|_|___|_____\_____ _____ _____
+#| ___ \        (_)         | | \ \ / / / __  |  _  / __  |  _  |
+#| |_/ _ __ ___  _  ___  ___| |_ \ V /  `' / /| |/' `' / /| |/' |
+#|  __| '__/ _ \| |/ _ \/ __| __|/   \    / / |  /| | / / |  /| |
+#| |  | | | (_) | |  __| (__| |_/ /^\ \ ./ /__\ |_/ ./ /__\ |_/ /
+#\_|  |_|  \___/| |\___|\___|\__\/   \/ \_____/\___/\_____/\___/
+#              _/ |
+#             |__/
+#
+# This code is part of the proposal of the team "MLJC UniTo" - University of Turin
+# for "ProjectX 2020" Climate Change for AI.
+# The code is licensed under MIT 3.0
+# Please read readme or comments for credits and further information.
+
+# Compiler: Julia 1.5
+
+# Short description of this file: Numerical Resolution of Euler System
+
 using ModelingToolkit
 using Plots, PyPlot
 using DifferentialEquations, DiffEqOperators, LinearAlgebra, OrdinaryDiffEq, RecursiveArrayTools
@@ -29,7 +52,7 @@ g  = 9.81 #constant
 ρd = 1 #dry air density
 p0 = 100000 #reference pressure 10^5 Pa
 Rd = 8.31 #gas constant for dry air
-ηc = 0.2 #page 8 of Advanced Research WRF M4
+ηc = 0.2 #page 8 of Advanced Research WRF V4((http://dx.doi.org/10.5065/1dfh-6p97)
 
 #simulation inputs
 sum_of_qs = 0.1 #read from file
@@ -105,12 +128,12 @@ domains = [x ∈ IntervalDomain(0.0,1.0),
 dx = 0.1; dy= 0.1; dη = 0.1; dt = 0.1
 
 
-##### Da qua si passa da PDE a ODE seguendo http://www.stochasticlifestyle.com/solving-systems-stochastic-pdes-using-gpus-julia/
+
 const N_ = 10
 
 const X = reshape([i for i in 1:10 for j in 1:10 for k in 1:10], N_,N_,N_)
 const Y = reshape([j for i in 1:10 for j in 1:10 for k in 1:10], N_,N_,N_)
-# \eta maiuscolo
+
 const H = reshape([k for i in 1:10 for j in 1:10 for k in 1:10], N_,N_,N_)
 
 const Mx = Tridiagonal([1.0 for i in 1:N_-1],[-2.0 for i in 1:N_],[1.0 for i in 1:N_-1])
@@ -145,7 +168,7 @@ My[end,end-1] = 2.0
 Mη[1,2] = 2.0
 Mη[end,end-1] = 2.0
 
-# rifare un attimo in base a quali prodotti abbiamo
+
 const MMxu_1 = zeros(N_,N_,N_);
 const MMyu_2 = zeros(N_,N_,N_);
 const MMyu_1 = zeros(N_,N_,N_);
@@ -164,10 +187,9 @@ const MMηu_3 = zeros(N_,N_,N_);
 
 MMxu_1
 
-# valori iniziali
+# initial values
 u0 = zeros(N_,N_,N_,7)
 
-# da completare, a partire dai prodotti per definire le derivazioni
 function ff(du,u,p,t)
   u_1 = @view  u[:,:,:,1]
   u_2 = @view  u[:,:,:,2]
@@ -185,7 +207,7 @@ function ff(du,u,p,t)
   du_6 = @view du[:,:, :, 6]
   du_7 = @view du[:,:, :, 7]
 
-  #definire qua derivate
+
   mul!(MMxu_1,MMx,u_1)
   mul!(MMyu_2,MMy,u_2)
   mul!(MMyu_1,MMy,u_1)
@@ -244,7 +266,7 @@ function ff(du,u,p,t)
   @. du_3 = - my/μd*(divVu_3 - g*((α/αd)*p0*(Rd/(p0*αd))^γ*γ*u_5^(γ-1)*MMηu_5 - μd) - FW)
 
   @. du_5 = - 1/μd*(divVu_5 - FΘm)    #coupling with SFIRE
-  @. divV = 0              # ?????
+  @. divV = 0              
   @. du_7 = - 1/g*(1.0/μd)*(innerV∇ϕ - g*W)
   @. du_6 = - 1/μd*(divVu_6 - FQm)
 end
