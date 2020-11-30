@@ -11,8 +11,8 @@ with
 R_0 = \frac{I_R\varepsilon }{\rho_b \varepsilon Q_i_g)}
 
 While the components of the equation (1) are computed from:
-1) Fuel properties (Table1),
-2) Wind speed component U, named mid-flame-level,
+1) Fuel properties;
+2) Wind speed component U, named mid-flame-level;
 3) terrain slope: 
 tan(\phi) = \bigtriangledown z\cdot n
 (n = normal versor with respect of fire line)
