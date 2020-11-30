@@ -11,6 +11,7 @@
 </h1>
 
 ### [Model Selection](https://raw.githubusercontent.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/master/Model%20selection/README.md?token=AP2PLTH5LNAUBEMF52UFIAC7X3PES)
-[Model selection] (Model selection/README.md)
+[Model selection] (./Model selection/README.md)
+[Model Selection](Model selection/README.md)
 
-### [Interpolation](https://raw.githubusercontent.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/master/Interpolation/readme.md?token=AP2PLTBXSQINBPPDC645GL27YAV4M)
+### [Interpolation](/Interpolation/readme.md)
