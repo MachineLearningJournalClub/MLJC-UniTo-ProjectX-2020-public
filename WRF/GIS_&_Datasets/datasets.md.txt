@@ -5,7 +5,7 @@ under the name of "Highest Resolution of each Mandatory Field".
 Because of their large dimensions we preferred to provide here only the link.
 
 - Fuel and high resolution maps, provided by Landfire website (https://www.landfire.gov/) and properly
-cut for our domain simulation, are accessible on the Google Drive, in the folders NFUEL_CAT and  
+cut for our domain simulation, are accessible on the Google Drive, in the folders NFUEL_CAT and ZSF
 (https://drive.google.com/drive/u/0/folders/1_bPQD0bYPEROuYgX6LdGz3natJRzvOhL)
 
 - Meteorological global datasets from GFS model, are provided by the Research Data Archive
