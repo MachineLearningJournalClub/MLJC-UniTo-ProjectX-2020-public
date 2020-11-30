@@ -8,5 +8,5 @@ The level-set is the mathematical core for calculating the spread of the fire. T
 
  * [Development](/Level_Set_Implementation/Development/): old but working code;
  * [Examples](/Level_Set_Implementation/Examples/): the results of some idealized and simplified cases;
- * [Final code](/Level_Set_Implementation/Final Code/): the final working version;
- * [Saved NN parameters](/Level_Set_Implementation/Saved NN params/): useful for reproduce results without having to re-learn.
+ * [Final code](/Level_Set_Implementation/Final%20Code/): the final working version;
+ * [Saved NN parameters](/Level_Set_Implementation/Saved%20NN%20params/): useful for reproduce results without having to re-learn.
