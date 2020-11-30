@@ -10,7 +10,7 @@ Following Chris Rackauckas' approach [[1]](#1), we reimplemented the following L
 
  ### [Neural ODE 1D](/Model_Selection/DiffEqFlux/NeuralODE1D%20DiffEqFlux.jl)
 
- ### Diffusion Equation:defining a 2-D reaction-diffusion equation. It describes combustion dynamics, similar to WRF-Fire equations.
+ ### Diffusion Equation: defining a 2-D reaction-diffusion equation. It describes combustion dynamics, similar to WRF-Fire equations.
 
  + #### [Diffusion Equation with a NN](/Model_Selection/DiffEqFlux/DiffusionEquation_NN.jl)
  + #### [Diffusion Equation with a CNN](/Model_Selection/DiffEqFlux/DiffusionEquation_CNN.jl)
