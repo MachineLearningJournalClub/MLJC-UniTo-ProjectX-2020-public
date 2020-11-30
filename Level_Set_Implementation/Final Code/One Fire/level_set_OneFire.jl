@@ -1,3 +1,26 @@
+#___  ____       ___ _____   _   _       _ _
+#|  \/  | |     |_  /  __ \ | | | |     (_| |
+#| .  . | |       | | /  \/ | | | |_ __  _| |_ ___
+#| |\/| | |       | | |     | | | | '_ \| | __/ _ \
+#| |  | | |___/\__/ | \__/\ | |_| | | | | | || (_) |
+#_______\_____\____/ \____/  _____|_|___|_____\_____ _____ _____
+#| ___ \        (_)         | | \ \ / / / __  |  _  / __  |  _  |
+#| |_/ _ __ ___  _  ___  ___| |_ \ V /  `' / /| |/' `' / /| |/' |
+#|  __| '__/ _ \| |/ _ \/ __| __|/   \    / / |  /| | / / |  /| |
+#| |  | | | (_) | |  __| (__| |_/ /^\ \ ./ /__\ |_/ ./ /__\ |_/ /
+#\_|  |_|  \___/| |\___|\___|\__\/   \/ \_____/\___/\_____/\___/
+#              _/ |
+#             |__/
+#
+# This code is part of the proposal of the team "MLJC UniTo" - University of Turin
+# for "ProjectX 2020" Climate Change for AI.
+# The code is licensed under MIT 3.0
+# Please read readme or comments for credits and further information.
+
+# Compiler: Julia 1.5
+
+# Short description of this file: Level set implementation for One Fire simulation
+
 using NeuralPDE
 using Quadrature, Cubature, Cuba
 using Flux, ModelingToolkit, GalacticOptim, Optim, DiffEqFlux
@@ -118,7 +141,7 @@ w0   = wl/(1 + Mf)
 ρb   = w0/δm                        #different from paper for units reasons
 β    = ρb/ρP
 ξ    = exp((0.792 + 0.618*sigma^0.5)*(β+0.1))/(192 + 0.25965*sigma)
-ηs   = 0.174*(SE^(-0.19))           
+ηs   = 0.174*(SE^(-0.19))
 ηM   = 1 - 2.59*Mf/Mx + 5.11*(Mf/Mx)^2 - 3.52*(Mf/Mx)^3
 wn   = w0/(1 + ST)
 Γmax = (sigma^(1.5))/(495 + 0.594*sigma^(1.5))
@@ -138,9 +161,9 @@ S    = fuel_scale*R0*(1 + ϕw + ϕS)         #fire spread rate
 eq = Dt(u(t,x,y,θ)) + S*gn ~ 0      #LEVEL SET EQUATION
 
 initialCondition = (((xScale*(x-x0[1]))^2)*xSpread[1] + ((yScale*(y-y0[1]))^2)*ySpread[1])^0.5 - amplitude[1]   #Distance from ignition
- 
+
 #Multiple ignition points
-#=                  
+#=
 if length(x0) > 2
     for b = 2:length(x0)
         initialCondition = min(initialCondition, (((xScale*(x-x0[b]))^2)*xSpread[b] + ((yScale*(y-y0[b]))^2)*ySpread[b])^0.5 - amplitude[b])
@@ -166,7 +189,7 @@ indvars = [t,x,y]   #phisically independent variables
 depvars = [u]       #dependent (target) variable
 
 dim = length(domains)
-            
+
 losses = []
 cb = function (p,l)     #loss function handling
     println("Current loss is: $l")
@@ -268,14 +291,14 @@ if printBCSComp
     trainingPlot = Plots.plot(1:(maxIters + 1), losses, yaxis=:log, title = string("Training time = 270 s",
         "\\n Iterations: ", maxIters, "   NN: 16>16>16"), ylabel = "log(loss)", legend = false) #loss plot
 
-    bcsComparisonPlots = Plots.plot(bcsPlot, bcsPredict, bcsDiff, bcsFireline,bcsFirelinePredict, trainingPlot, size = (1500,600))  
+    bcsComparisonPlots = Plots.plot(bcsPlot, bcsPredict, bcsDiff, bcsFireline,bcsFirelinePredict, trainingPlot, size = (1500,600))
     Plots.savefig("onefire_bcs_comparison.pdf")
     bcsComparisonPlots
 end
 
-                                                    
-##IMPORT WRF OUTPUT                                                    
-tensor = readdlm("/Users/francescocalisto/Documents/FRANCESCO/ACADEMICS/Università/UNITO/ML/GitHub/ProjectX2020/Julia_implementation/LevelSetEq/WRF Out one fire/tensor.txt")
+
+##IMPORT WRF OUTPUT
+tensor = readdlm("/WRF Out one fire/tensor.txt")
 tensor = reshape(tensor, (420,420,31))
 tensor = permutedims(tensor, [2,1,3])
 
@@ -291,7 +314,7 @@ gif_tensor = @animate for time = 1:31
 end
 gif(gif_tensor, "WRF_out_one_fire.gif", fps = FPS)
 =#
-                                                    
+
 
 for i = 1:7
     timel = i
