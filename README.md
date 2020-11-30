@@ -12,8 +12,8 @@
 
 The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting [WRF-SFIRE](https://github.com/openwfm/WRF-SFIRE) simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs, in order to transform it into a real-time simulator for wildfire spread prediction. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package, which turns an integration problem into a minimization one.  
 
-Onde             |  Two
-:-------------------------:|:-------------------------:
+NeuralPDE Architecture                           |  Standard Integration
+:-----------------------------------------------:|:-------------------------:
 ![](/Support_Materials/Assets/architecture.png)  |  ![](/Support_Materials/Assets/integration.png)
 
 
@@ -34,10 +34,9 @@ The results obtained by our simulation performed with the Weather Research Forec
 The level-set is the mathematical core for calculating the spread of the fire.  The minimization of the loss func-tions is the process that actually solves the PDE and constitutesthe  main  load  for  the  CPU.  It  can  be  easily  accelerated  usingGPUs. The  model  was  implemented  using  the  low-level  interface of   the NeuralPDE.jl library which contains the necessarymethods for the generation of the training datasets and of theloss functions starting from the explicit form of the equations and the boundary conditions.
 
 
-<p float="left">
-  <img src="Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.png">
-  <img src="Visualizations/WRF/Time evolution/contour_wrf_one_fire_evolution.png">
-</p>
+Level set equation solution computed by PINNs                           |  Level set equation solution computed by WRF
+:-----------------------------------------------:|:-------------------------:
+![](/Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.png)  |  ![](Visualizations/WRF/Time evolution/contour_wrf_one_fire_evolution.png)
 
 
 ### [Euler System Implementation](/Euler_System_Implementation)
