@@ -4,7 +4,7 @@
   Physics-Informed Machine Learning Simulator for Wildfire Propagation
 </h1>
 
-https://img.shields.io/github/stars/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public?style=social
+![GitHub Repo stars](https://img.shields.io/github/stars/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public?style=social)
 
 The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting [WRF-SFIRE](https://github.com/openwfm/WRF-SFIRE) simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs in order to increase its computational efficiency. The goal is to evaluate the feasibility of a real-time simulator for wildfire spread prediction based on PINNs. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package, which turns an integration problem into a minimization one.  
 
