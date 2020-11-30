@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2020 Bottero Luca, Calisto Francesco, Graziano Giovanni, Pagliarino Valerio, Scauda Martina, Tiengo Sara
+Copyright (c) 2020 Bottero Luca, Calisto Francesco, Graziano Giovanni, Pagliarino Valerio, Scauda Martina and Tiengo Sara
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
