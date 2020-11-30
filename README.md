@@ -39,8 +39,9 @@ The results obtained by our simulation performed with the Weather Research Forec
 The level-set is the mathematical core for calculating the spread of the fire.  The minimization of the loss func-tions is the process that actually solves the PDE and constitutesthe  main  load  for  the  CPU.  It  can  be  easily  accelerated  usingGPUs. The  model  was  implemented  using  the  low-level  interface of   the NeuralPDE.jl library which contains the necessarymethods for the generation of the training datasets and of theloss functions starting from the explicit form of the equations and the boundary conditions.
 
 
-<p align="center">
+<p float="left">
   <img src="Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.png">
+  <img src="Visualizations/WRF/Time evolution/contour_wrf_one_fire_evolution.png">
 </p>
 
 
