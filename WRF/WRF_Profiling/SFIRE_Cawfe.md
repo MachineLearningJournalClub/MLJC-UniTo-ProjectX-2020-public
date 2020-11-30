@@ -94,7 +94,7 @@ INPUT = speed,tanphi,cor_wind,cor_slope,i,j,fp
 fp are the fire_params:
 vx,vy! wind velocity (m/s)
 zsf! terrain height (m)
-dzdxf,dzdyf! terrain grad (1)
+dzdxf,dzdyf! terrain grad
 
 
 bbb, phisc, phiwc, r_0! spread formula coefficients
@@ -123,13 +123,13 @@ ros_back,ros_wind,ros_slope are calculated.
 Correcions of the 3 parameters are calculated:
 Finally: is calculated:
 
-## excess = ros_back + ros_wind + ros_slope - ros_max
+excess = ros_back + ros_wind + ros_slope - ros_max
 
 If excess>0:
 
-## ros_wind = ros_wind - excess*ros_wind/(ros_wind+ros_slope)
+ros_wind = ros_wind - excess*ros_wind/(ros_wind+ros_slope)
 
-## ros_slope = ros_slope - excess*ros_slope/(ros_wind+ros_slope)
+ros_slope = ros_slope - excess*ros_slope/(ros_wind+ros_slope)
 
 fine subroutine fire_ros_cawfe
 
