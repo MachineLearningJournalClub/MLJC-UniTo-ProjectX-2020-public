@@ -213,13 +213,13 @@ b_1 = time_ns()
 print(string("Training time = ",(b_1-a_1)/10^9))
 #initθ = res.minimizer
 
-pars = open(readdlm,"/Users/francescocalisto/Documents/FRANCESCO/ACADEMICS/Università/UNITO/ML/GitHub/ProjectX2020/Julia_implementation/LevelSetEq/Isom Creek/params_level_set_Isom_Creek.txt")
+pars = open(readdlm,"/Julia_implementation/LevelSetEq/Isom Creek/params_level_set_Isom_Creek.txt") #to import parameters from previous training (change also line 249 accordingly)
 pars
 
 phi = discretization.phi
 
 
-##QUICK VISUALIZATION with tStepFactor = 5
+##VISUALIZATION
 
 extrapolate  = false     #allows extrapolating values outside the original domain
 printBCSComp = true     #prints initial condition comparison and training loss plot
@@ -296,40 +296,7 @@ if printBCSComp
 end
 
 
-## VISUALIZATION
-#=
-maxIters = 2801
-
-extrapolate  = false
-printBCSComp = true
-
-tStepFactor = 0.5
-
-if extrapolate
-    timeFactor  = 2.0 #used to extrapolate the prediction outside the domain
-    xAxisFactor = 1.25 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
-    yAxisFactor = 1.25
-else
-    timeFactor  = 1 #used to extrapolate the prediction outside the domain
-    xAxisFactor = 1 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
-    yAxisFactor = 1
-end
-
-if domainShape == shape[1]
-    xs = 0.0 : dx : xwidth*xAxisFactor
-    ys = 0.0 : dy : ywidth*yAxisFactor
-elseif domainShape == shape[2]
-    xs = -xwidth*0.5*xAxisFactor : dx : xwidth*0.5*xAxisFactor
-    ys = -ywidth*0.5*yAxisFactor : dy : ywidth*0.5*yAxisFactor
-end
-ts = 0 : dt*tStepFactor : tmax*timeFactor
-#x_s = xs
-#y_s = ys .+ 80
-u_predict = [reshape([first(phi([t,x,y],res2.minimizer)) for x in xs for y in ys], (length(xs),length(ys))) for t in ts]
-
-maxlim = maximum(maximum(u_predict[t]) for t = 1:length(ts))
-minlim = minimum(minimum(u_predict[t]) for t = 1:length(ts))
-=#
+##IMPORT THE WRF OUTPUT
 
 tensor = readdlm("/Users/francescocalisto/Desktop/WRF_tensor_new/tensor_isom.txt")
 tensor = reshape(tensor, (1440,1440,73))
@@ -340,6 +307,7 @@ tensor = permutedims(tensor, [2,1,3])
 # axis_scale_to_mesh_cell_ID()
 xs =  0 : dx*144 : 1440
 ys =  0 : dx*144 : 1440
+                                                                
 #=
 gif_tensor = @animate for time = 1:31
     Plots.plot(tensor[:,:,time], legend = false, levels = [0.01], size = (600,600))
@@ -347,17 +315,9 @@ end
 gif(gif_tensor, "WRF_out_one_fire.gif", fps = FPS)
 =#
 
-for i = 3:20
-    tensor_p = Plots.contour(tensor[:,:,i+8], levels = [0.01], tick = false, grid = false, size = (600,600))
-    pred_p   = Plots.contour!(xs, ys, u_predict[i], levels = [0], tick = false, grid = false, size = (600,600))
-    Plots.plot(tensor_p)
-    Plots.plot!(pred_p)
-    #Plots.savefig(tensor_p, string("/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Julia_implementation/LevelSetEq/WRF_tensor/wrf_isom_creek_tensor_",i,".png"))
-    #Plots.savefig(pred_p, string("/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Julia_implementation/LevelSetEq/level_set_final/level_set_isom_creek_final_",i,".png"))
-end
-
-timel = 4
-
+                                                                
+##PLOTS OF COMPARISON BETWEEN WRF AND PINNS                                                                
+                                                                
 for i = 3:20
     timel = i
     tensor_p = Plots.contour(tensor[:,:,Int(floor((8 + timel)))], levels = [0.01], tick = true, grid = true, size = (400,400), colorbar=false, color="red", label=["WRF output"],
@@ -367,14 +327,14 @@ for i = 3:20
 end
 
 
-h_tensor = heatmap(tensor_p)
-h_pred = heatmap(u_predict[1],levels = [0.6])
+#h_tensor = heatmap(tensor_p)
+#h_pred = heatmap(u_predict[1],levels = [0.6])
 
 
-##SAVED PARAMETERS
+##SAVE PARAMETERS TO REPRODUCE THE SAME RESULTS WITHOUT TRAINING AGAIN
 param = initθ
 
-outfile = "/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Julia_implementation/LevelSetEq/Isom Creek/params_level_set_Isom_Creek.txt"
+outfile = "/Julia_implementation/LevelSetEq/Isom Creek/params_level_set_Isom_Creek.txt"
 open(outfile, "w") do f
   for i in param
     println(f, i)

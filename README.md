@@ -10,7 +10,11 @@
   Physics-Informed Machine Learning Simulator for Wildfire Propagation
 </h1>
 
-The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting [WRF-SFIRE](https://github.com/openwfm/WRF-SFIRE) simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs, in order to transform it into a real-time simulator for wildfire spread prediction. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package, which turns an integration problem into a minimization one.  
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/blob/rel2/LICENSE.md)
+[![GitHub stars](https://img.shields.io/github/stars/Naereen/StrapDown.js.svg?style=social&label=Star&maxAge=2592000)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public)
+[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public)
+
+The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting [WRF-SFIRE](https://github.com/openwfm/WRF-SFIRE) simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs in order to increase its computational efficiency. The goal is to evaluate the feasibility of a real-time simulator for wildfire spread prediction based on PINNs. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package, which turns an integration problem into a minimization one.  
 
 NeuralPDE Architecture                           |  Standard Integration
 :-----------------------------------------------:|:-------------------------:
@@ -43,7 +47,7 @@ Level set equation solution computed by PINNs                           |  Level
 This is our attempt to implement the atmospherical model of WRF into neuralPDE, because it necessry if a couple model (which has an improved precision) is needed. Writing and solving the 7-equation Euler system in Julia wasreally challenging,  in fact at the moment we are not aware ofany publications where these techniques are yet applied to PDEsystems of such complexity.  Unfortunately, theNeuralPDElibrary is still unable to treat this kind of problem with stability,and often incurs errors due to internal divergence calculations.Despite  this,  we  have  been  able  to  obtain  convergence  of  theloss function, although it is not enough to present valid results.We contacted the authors of these libraries, that are still underdevelopment, and we are looking forward to contributing.
 
 ### [Link to Google Drive](https://drive.google.com/drive/folders/1wUCKUyVwC0Pf-e9WlLiqOxRLF0or2D0U)
-
+In the Google Drive linked above are hosted the results of the simulations performed with WRF. The results are in the standard NetCDF format and can be explored easily using the [Ncview tool](http://meteora.ucsd.edu/~pierce/ncview_home_page.html)
 
 
 
