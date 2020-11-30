@@ -17,11 +17,11 @@
 # The code is licensed under MIT 3.0
 # Please read readme or comments for credits and further information.
 
-# Compiler: Julia 1.5.3
+# Compiler: Julia 1.5
 
-# Short description of this file:#This script simulates the Fisher-KPP equation
+# Short description of this file:This script simulates the Fisher-KPP equation
 #and fits a neural PDE to the data with the growth (aka reaction) term replaced
-#by a feed-forward neural network and the diffusion term with a CNN. 
+#by a feed-forward neural network and the diffusion term with a CNN.
 
 #Warning: Reset Julia Kernel (pre-compilation required) to avoid errors in
 #redefinitions of constants.

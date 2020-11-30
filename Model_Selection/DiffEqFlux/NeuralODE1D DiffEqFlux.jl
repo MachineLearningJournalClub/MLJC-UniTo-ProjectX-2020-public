@@ -17,7 +17,7 @@
 # The code is licensed under MIT 3.0
 # Please read readme or comments for credits and further information.
 
-#Compiler: Julia 1.5.3
+#Compiler: Julia 1.5
 
 # Short description of this file: SIMPLE PRELIMINARY EXAMPLE OF NEURAL ODE using
 # Julia's library DiffEqFlux.

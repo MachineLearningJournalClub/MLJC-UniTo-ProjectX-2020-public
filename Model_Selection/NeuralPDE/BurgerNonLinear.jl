@@ -1,3 +1,26 @@
+#___  ____       ___ _____   _   _       _ _
+#|  \/  | |     |_  /  __ \ | | | |     (_| |
+#| .  . | |       | | /  \/ | | | |_ __  _| |_ ___
+#| |\/| | |       | | |     | | | | '_ \| | __/ _ \
+#| |  | | |___/\__/ | \__/\ | |_| | | | | | || (_) |
+#_______\_____\____/ \____/  _____|_|___|_____\_____ _____ _____
+#| ___ \        (_)         | | \ \ / / / __  |  _  / __  |  _  |
+#| |_/ _ __ ___  _  ___  ___| |_ \ V /  `' / /| |/' `' / /| |/' |
+#|  __| '__/ _ \| |/ _ \/ __| __|/   \    / / |  /| | / / |  /| |
+#| |  | | | (_) | |  __| (__| |_/ /^\ \ ./ /__\ |_/ ./ /__\ |_/ /
+#\_|  |_|  \___/| |\___|\___|\__\/   \/ \_____/\___/\_____/\___/
+#              _/ |
+#             |__/
+#
+# This code is part of the proposal of the team "MLJC UniTo" - University of Turin
+# for "ProjectX 2020" Climate Change for AI.
+# The code is licensed under MIT 3.0
+# Please read readme or comments for credits and further information.
+
+# Compiler: Julia 1.5
+
+# Short description of this file: Non Linear Burger Equation
+
 using NeuralPDE, Flux, ModelingToolkit, Optim, DiffEqFlux
 using GalacticOptim
 using Base
@@ -17,6 +40,7 @@ Re = 2500.0
 # 3D PDE
 eq  = Dt(u(x,t,θ)) + u(x,t,θ) * Dx(u(x,t,θ)) ~ 1/Re * Dxx(u(x,t,θ))
 #eq  = Dt(u(x,y,t,θ)) + u(x,y,t,θ) * Dx(u(x,y,t,θ)) ~ 1/Re * (Dxx(u(x,y,t,θ)) + Dyy(u(x,y,t,θ)))
+
 # Initial and boundary conditions
 
 A0   = 1.0
