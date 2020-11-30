@@ -12,6 +12,11 @@
 
 The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting [WRF-SFIRE](https://github.com/openwfm/WRF-SFIRE) simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs, in order to transform it into a real-time simulator for wildfire spread prediction. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package, which turns an integration problem into a minimization one.  
 
+<p align="center">
+  <img src="/Support_Materials/Assets/Architecture.png">
+</p>
+
+
 ### [Model Selection](/Model_Selection)
 A collection of our attempts to find a proper model which suites all of our needs. We have ex-plored different architectures within the field of Scientific Ma-chine Learning.  We started our investigations using the DiffE-qFlux.jllibrary, which defines and solves neural ordinarydifferential equations (i.e. ODEs where a neural network defines its derivative function)
 
