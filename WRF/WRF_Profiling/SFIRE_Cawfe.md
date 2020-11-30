@@ -89,7 +89,7 @@ The subroutines considers two different cases:
 Not bushfires fire: (.not. fp%ischap(i,j) > 0.)
 In this case there are two possibilities:
 1) if (ibeh = 1) use Rothermel formula
-2) 3) use the Rothermel formula modified.
+2) and 3) use the Rothermel formula modified.
 
 ros_back,ros_wind,ros_slope are calculated, and than:
 ros=ros_back+ros_wind+ros_slope
