@@ -4,7 +4,8 @@
   Interpolation
 </h1>
 
-We built an interpolation model of discrete-valued fields using functional forms. Our aim is to train neural networks that behave like continuos functions.
+The current implementation of the PINNs architecture requires the vector / scalar fields of the input parameters (for example wind, altimetric profile, fuel etc.) to be loaded in the form of differentiable functions. This is due to some limitations of the library NeuralPDE.jl (that currently is still under development).
+In the practial applications, these map are in the form of matrices of data, for this reason to carry out the simulations presented in this proposal we created some scripts that perform curve fitting of the discretized data using polynomial and gaussians.
 
 A first [interpolation example](/BC_Interpolation/Interpolation_Example/Surface_fit.cpp) is shown below. 
 <p align="center">

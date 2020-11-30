@@ -11,8 +11,8 @@ with
 R_0 = \frac{I_R\varepsilon }{\rho_b \varepsilon Q_i_g)}
 
 While the components of the equation (1) are computed from:
-1) Fuel properties (Table1),
-2) Wind speed component U, named mid-flame-level,
+1) Fuel properties;
+2) Wind speed component U, named mid-flame-level;
 3) terrain slope: 
 tan(\phi) = \bigtriangledown z\cdot n
 (n = normal versor with respect of fire line)
@@ -89,7 +89,7 @@ The subroutines considers two different cases:
 Not bushfires fire: (.not. fp%ischap(i,j) > 0.)
 In this case there are two possibilities:
 1) if (ibeh = 1) use Rothermel formula
-2) 3) use the Rothermel formula modified.
+2) and 3) use the Rothermel formula modified.
 
 ros_back,ros_wind,ros_slope are calculated, and than:
 ros=ros_back+ros_wind+ros_slope
