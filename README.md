@@ -11,7 +11,7 @@
 </h1>
 
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/blob/rel2/LICENSE.md)
-[![GitHub stars](https://img.shields.io/github/stars/Naereen/StrapDown.js.svg?style=social&label=Star)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/MLJC-UniTo-ProjectX-2020-public.js.svg?style=social&label=Star)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/stargazers)
 [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/graphs/contributors)
 
 The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting [WRF-SFIRE](https://github.com/openwfm/WRF-SFIRE) simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs in order to increase its computational efficiency. The goal is to evaluate the feasibility of a real-time simulator for wildfire spread prediction based on PINNs. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package, which turns an integration problem into a minimization one.  
