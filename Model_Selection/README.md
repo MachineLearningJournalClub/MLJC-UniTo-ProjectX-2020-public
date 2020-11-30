@@ -40,4 +40,4 @@ Then we used the previous numerical solution to generate data (plotted above) in
 ###  References
 <a id="1">[1]</a>
 Chris Rackauckas et al (2019).
-[DiffEqFlux.jl - A Julia Library for Neural Differential Equations](https://arxiv.org/abs/1902.02376)
+[_DiffEqFlux.jl - A Julia Library for Neural Differential Equations_](https://arxiv.org/abs/1902.02376)
