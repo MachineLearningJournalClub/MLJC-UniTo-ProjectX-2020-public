@@ -27,7 +27,7 @@ Some utility notebooks needed to implement key informations (terrain slope, wind
 The results obtained by our simulation performed with the Weather Research Forecast system. First of all we performed a profiling with the perf tool, in order to mesure the overhead of WRF's subroutines
 
 <p align="center">
-  <img src="Visualizations/D2%20Graphic%20composition/profilePlot.pdf">
+  <img src="/Support_Materials/Assets/wrfprofiling.png">
 </p>
 
 Later we ran several simulations of fire and atmospherical events. We then kept the result for the Isom Creek and OneFire cases, which were used to compare with the output of the neural network.
