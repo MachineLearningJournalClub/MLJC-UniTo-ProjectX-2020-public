@@ -21,7 +21,6 @@
 ### [Euler System Implementation]()
 
 ### [Julia Environments](/Julia_Environments/readme.md)
-### [Model Selection](/Model_Selection/README.md)
 
 
 
