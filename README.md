@@ -4,6 +4,10 @@
   Physics-Informed Machine Learning Simulator for Wildfire Propagation
 </h1>
 
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/blob/rel2/LICENSE.md)
+[![GitHub stars](https://img.shields.io/github/stars/Naereen/StrapDown.js.svg?style=social&label=Star)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/stargazers)
+[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/graphs/contributors)
+
 The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting [WRF-SFIRE](https://github.com/openwfm/WRF-SFIRE) simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs in order to increase its computational efficiency. The goal is to evaluate the feasibility of a real-time simulator for wildfire spread prediction based on PINNs. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package, which turns an integration problem into a minimization one.  
 
 NeuralPDE Architecture                           |  Standard Integration
@@ -34,7 +38,7 @@ Level set equation solution computed by PINNs                           |  Level
 
 
 ### [Euler System Implementation](/Euler_System_Implementation)
-This is our attempt to implement the atmospherical model of WRF into neuralPDE, because it necessry if a couple model (which has an improved precision) is needed. Writing and solving the 7-equation Euler system in Julia wasreally challenging,  in fact at the moment we are not aware ofany publications where these techniques are yet applied to PDEsystems of such complexity.  Unfortunately, theNeuralPDElibrary is still unable to treat this kind of problem with stability,and often incurs errors due to internal divergence calculations.Despite  this,  we  have  been  able  to  obtain  convergence  of  theloss function, although it is not enough to present valid results.We contacted the authors of these libraries, that are still underdevelopment, and we are looking forward to contributing.
+This is our attempt to implement the atmospherical model of WRF using PINNS (NeuralPDE.jl). It is necessary because the level set equation (wildfire propagation) is strongly dependent on wind and other atmospheric parameters. Writing and solving the 7-equation Euler system in Julia was really challenging, in fact at the moment we are not aware of any publications where these NeuralPDE.jl and the PINNs are applied to systems of PDE of such complexity.  Unfortunately, the NeuralPDE.jl library is still unable to treat this kind of problem with stability and often incurs errors due to internal divergence calculations. Despite  this,  we  have  been  able  to  obtain  convergence  of  the loss function, although it is not enough to present valid results. We contacted the authors of these libraries, that are still under development, and we are looking forward to continue the development.
 
 ### [Link to Google Drive](https://drive.google.com/drive/folders/1wUCKUyVwC0Pf-e9WlLiqOxRLF0or2D0U)
 In the Google Drive linked above are hosted the results of the simulations performed with WRF. The results are in the standard NetCDF format and can be explored easily using the [Ncview tool](http://meteora.ucsd.edu/~pierce/ncview_home_page.html)
