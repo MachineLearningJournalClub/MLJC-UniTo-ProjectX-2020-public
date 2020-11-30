@@ -13,11 +13,7 @@
 The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting [WRF-SFIRE](https://github.com/openwfm/WRF-SFIRE) simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs, in order to transform it into a real-time simulator for wildfire spread prediction. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package, which turns an integration problem into a minimization one.  
 
 <p align="center">
-  <img src="/Support_Materials/Assets/architecture.png">
-</p>
-
-<p align="center">
-  <img src="/Support_Materials/Assets/integration.png">
+  <img src="/Support_Materials/Assets/Architecture.png">
 </p>
 
 
@@ -39,6 +35,7 @@ The level-set is the mathematical core for calculating the spread of the fire.  
 
 <p align="center">
   <img src="Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.png">
+  <img src="Visualizations/WRF/Time evolution/contour_wrf_one_fire_evolution.png">
 </p>
 
 
