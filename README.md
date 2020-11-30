@@ -1,3 +1,9 @@
+# Work in progress...
+
+ <img src="https://www.provincia.vicenza.it/immagini/work_in_porgress_.jpg/image" alt="Work in progress" width="500" height="600"> 
+ 
+
+
 ![Logo](https://raw.githubusercontent.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/master/Support%20materials/Assets/Logo%20MLJC.png?token=ADFSHLHBDTVFCZFFGWESDN27X3TOG)
 
 <h1 align="center">
