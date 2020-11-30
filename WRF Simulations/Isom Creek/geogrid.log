@@ -1,0 +1,167 @@
+2020-11-27 11:07:21.501 ---  *** Starting program geogrid.exe ***
+2020-11-27 11:07:21.501 --- Using the following namelist variables:
+2020-11-27 11:07:21.501 --- &SHARE
+2020-11-27 11:07:21.501 ---   WRF_CORE         = ARW
+2020-11-27 11:07:21.501 ---   MAX_DOM          = 1
+2020-11-27 11:07:21.501 ---   START_YEAR       = 0
+2020-11-27 11:07:21.501 ---   START_MONTH      = 0
+2020-11-27 11:07:21.501 ---   START_DAY        = 0
+2020-11-27 11:07:21.501 ---   START_HOUR       = 0
+2020-11-27 11:07:21.501 ---   START_MINUTE     = 0
+2020-11-27 11:07:21.501 ---   START_SECOND     = 0
+2020-11-27 11:07:21.502 ---   END_YEAR         = 0
+2020-11-27 11:07:21.502 ---   END_MONTH        = 0
+2020-11-27 11:07:21.502 ---   END_DAY          = 0
+2020-11-27 11:07:21.502 ---   END_HOUR         = 0
+2020-11-27 11:07:21.502 ---   END_MINUTE       = 0
+2020-11-27 11:07:21.502 ---   END_SECOND       = 0
+2020-11-27 11:07:21.502 ---   START_DATE       = 2020-06-05_12:00:00
+2020-11-27 11:07:21.502 ---   END_DATE         = 2020-06-06_06:00:00
+2020-11-27 11:07:21.502 ---   INTERVAL_SECONDS = 10800
+2020-11-27 11:07:21.502 ---   IO_FORM_GEOGRID  = 2
+2020-11-27 11:07:21.502 ---   OPT_OUTPUT_FROM_GEOGRID_PATH = ./
+2020-11-27 11:07:21.502 ---   SUBGRID_RATIO_X  = 15
+2020-11-27 11:07:21.502 ---   SUBGRID_RATIO_Y  = 15
+2020-11-27 11:07:21.502 ---   DEBUG_LEVEL      = 0
+2020-11-27 11:07:21.502 ---   ACTIVE_GRID      = .TRUE.
+2020-11-27 11:07:21.502 ---   NOCOLONS         = .FALSE.
+2020-11-27 11:07:21.502 --- /
+2020-11-27 11:07:21.502 --- &GEOGRID
+2020-11-27 11:07:21.502 ---   PARENT_ID         = 1
+2020-11-27 11:07:21.502 ---   PARENT_GRID_RATIO = 1
+2020-11-27 11:07:21.502 ---   I_PARENT_START    = 1
+2020-11-27 11:07:21.502 ---   J_PARENT_START    = 1
+2020-11-27 11:07:21.502 ---   S_WE              = 1
+2020-11-27 11:07:21.502 ---   E_WE              = 97
+2020-11-27 11:07:21.502 ---   S_SN              = 1
+2020-11-27 11:07:21.502 ---   E_SN              = 97
+2020-11-27 11:07:21.502 ---   GEOG_DATA_RES     = default
+2020-11-27 11:07:21.502 ---   DX                = 100.000000
+2020-11-27 11:07:21.503 ---   DY                = 100.000000
+2020-11-27 11:07:21.503 ---   MAP_PROJ          = lambert
+2020-11-27 11:07:21.503 ---   POLE_LAT          = 90.000000
+2020-11-27 11:07:21.503 ---   POLE_LON          = 0.000000
+2020-11-27 11:07:21.503 ---   REF_LAT           = 65.853996
+2020-11-27 11:07:21.504 ---   REF_LON           = -149.578995
+2020-11-27 11:07:21.504 ---   REF_X             = 100000002004087734272.000000
+2020-11-27 11:07:21.504 ---   REF_Y             = 100000002004087734272.000000
+2020-11-27 11:07:21.504 ---   TRUELAT1          = 55.000000
+2020-11-27 11:07:21.504 ---   TRUELAT2          = 65.000000
+2020-11-27 11:07:21.504 ---   STAND_LON         = -154.000000
+2020-11-27 11:07:21.504 ---   GEOG_DATA_PATH    = /home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG
+2020-11-27 11:07:21.504 ---   OPT_GEOGRID_TBL_PATH = geogrid/
+2020-11-27 11:07:21.504 --- /
+2020-11-27 11:07:21.517 --- Processing domain 1 of 1
+2020-11-27 11:07:21.517 --- INFORM: Using default interpolator sequence for HGT_M.
+2020-11-27 11:07:21.517 --- INFORM: Using default data source for HGT_M.
+2020-11-27 11:07:21.525 --- INFORM: Using default interpolator sequence for LANDUSEF.
+2020-11-27 11:07:21.525 --- INFORM: Using default data source for LANDUSEF.
+2020-11-27 11:07:21.531 --- INFORM: Using default interpolator sequence for SOILTEMP.
+2020-11-27 11:07:21.531 --- INFORM: Using default data source for SOILTEMP.
+2020-11-27 11:07:21.534 --- INFORM: Using default interpolator sequence for SOILCTOP.
+2020-11-27 11:07:21.534 --- INFORM: Using default data source for SOILCTOP.
+2020-11-27 11:07:21.539 --- INFORM: Using default interpolator sequence for SOILCBOT.
+2020-11-27 11:07:21.539 --- INFORM: Using default data source for SOILCBOT.
+2020-11-27 11:07:21.544 --- INFORM: Using default interpolator sequence for ALBEDO12M.
+2020-11-27 11:07:21.544 --- INFORM: Using default data source for ALBEDO12M.
+2020-11-27 11:07:21.546 --- INFORM: Using default interpolator sequence for GREENFRAC.
+2020-11-27 11:07:21.546 --- INFORM: Using default data source for GREENFRAC.
+2020-11-27 11:07:21.552 --- INFORM: Using default interpolator sequence for LAI12M.
+2020-11-27 11:07:21.552 --- INFORM: Using default data source for LAI12M.
+2020-11-27 11:07:21.555 --- INFORM: Using default interpolator sequence for SNOALB.
+2020-11-27 11:07:21.555 --- INFORM: Using default data source for SNOALB.
+2020-11-27 11:07:21.560 --- INFORM: Using default interpolator sequence for CON.
+2020-11-27 11:07:21.560 --- INFORM: Using default data source for CON.
+2020-11-27 11:07:21.566 --- INFORM: Using default interpolator sequence for VAR.
+2020-11-27 11:07:21.566 --- INFORM: Using default data source for VAR.
+2020-11-27 11:07:21.568 --- INFORM: Using default interpolator sequence for OA1.
+2020-11-27 11:07:21.568 --- INFORM: Using default data source for OA1.
+2020-11-27 11:07:21.569 --- INFORM: Using default interpolator sequence for OA2.
+2020-11-27 11:07:21.569 --- INFORM: Using default data source for OA2.
+2020-11-27 11:07:21.571 --- INFORM: Using default interpolator sequence for OA3.
+2020-11-27 11:07:21.571 --- INFORM: Using default data source for OA3.
+2020-11-27 11:07:21.573 --- INFORM: Using default interpolator sequence for OA4.
+2020-11-27 11:07:21.573 --- INFORM: Using default data source for OA4.
+2020-11-27 11:07:21.575 --- INFORM: Using default interpolator sequence for OL1.
+2020-11-27 11:07:21.575 --- INFORM: Using default data source for OL1.
+2020-11-27 11:07:21.577 --- INFORM: Using default interpolator sequence for OL2.
+2020-11-27 11:07:21.577 --- INFORM: Using default data source for OL2.
+2020-11-27 11:07:21.579 --- INFORM: Using default interpolator sequence for OL3.
+2020-11-27 11:07:21.579 --- INFORM: Using default data source for OL3.
+2020-11-27 11:07:21.580 --- INFORM: Using default interpolator sequence for OL4.
+2020-11-27 11:07:21.580 --- INFORM: Using default data source for OL4.
+2020-11-27 11:07:21.581 --- INFORM: Using default interpolator sequence for VAR_SSO.
+2020-11-27 11:07:21.581 --- INFORM: Using default data source for VAR_SSO.
+2020-11-27 11:07:21.585 --- INFORM: Using default interpolator sequence for LAKE_DEPTH.
+2020-11-27 11:07:21.585 --- INFORM: Using default data source for LAKE_DEPTH.
+2020-11-27 11:07:21.585 --- INFORM: Could not read 'index' file /home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/lake_depth/index for field LAKE_DEPTH
+2020-11-27 11:07:21.585 --- INFORM: This field is optional and will not be processed.
+2020-11-27 11:07:21.585 --- INFORM: Using default interpolator sequence for URB_PARAM.
+2020-11-27 11:07:21.585 --- INFORM: Using default data source for URB_PARAM.
+2020-11-27 11:07:21.585 --- INFORM: Could not read 'index' file /home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/NUDAPT44_1km/index for field URB_PARAM
+2020-11-27 11:07:21.585 --- INFORM: This field is optional and will not be processed.
+2020-11-27 11:07:21.585 --- INFORM: Using default interpolator sequence for FRC_URB2D.
+2020-11-27 11:07:21.585 --- INFORM: Using default data source for FRC_URB2D.
+2020-11-27 11:07:21.585 --- INFORM: Could not read 'index' file /home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/urbfrac_nlcd2011/index for field FRC_URB2D
+2020-11-27 11:07:21.585 --- INFORM: This field is optional and will not be processed.
+2020-11-27 11:07:21.585 --- INFORM: Using default interpolator sequence for IMPERV.
+2020-11-27 11:07:21.585 --- INFORM: Using default data source for IMPERV.
+2020-11-27 11:07:21.585 --- INFORM: Could not read 'index' file /home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/nlcd2011_imp_ll_9s/index for field IMPERV
+2020-11-27 11:07:21.585 --- INFORM: This field is optional and will not be processed.
+2020-11-27 11:07:21.585 --- INFORM: Using default interpolator sequence for CANFRA.
+2020-11-27 11:07:21.585 --- INFORM: Using default data source for CANFRA.
+2020-11-27 11:07:21.585 --- INFORM: Could not read 'index' file /home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/nlcd2011_can_ll_9s/index for field CANFRA
+2020-11-27 11:07:21.585 --- INFORM: This field is optional and will not be processed.
+2020-11-27 11:07:21.585 --- INFORM: Using default interpolator sequence for EROD.
+2020-11-27 11:07:21.585 --- INFORM: Using default data source for EROD.
+2020-11-27 11:07:21.585 --- INFORM: Could not read 'index' file /home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/erod/index for field EROD
+2020-11-27 11:07:21.585 --- INFORM: This field is optional and will not be processed.
+2020-11-27 11:07:21.585 --- INFORM: Using default interpolator sequence for CLAYFRAC.
+2020-11-27 11:07:21.585 --- INFORM: Using default data source for CLAYFRAC.
+2020-11-27 11:07:21.585 --- INFORM: Could not read 'index' file /home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/clayfrac_5m/index for field CLAYFRAC
+2020-11-27 11:07:21.585 --- INFORM: This field is optional and will not be processed.
+2020-11-27 11:07:21.585 --- INFORM: Using default interpolator sequence for SANDFRAC.
+2020-11-27 11:07:21.585 --- INFORM: Using default data source for SANDFRAC.
+2020-11-27 11:07:21.585 --- INFORM: Could not read 'index' file /home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/sandfrac_5m/index for field SANDFRAC
+2020-11-27 11:07:21.585 --- INFORM: This field is optional and will not be processed.
+2020-11-27 11:07:21.585 --- INFORM: Using default interpolator sequence for NFUEL_CAT.
+2020-11-27 11:07:21.585 --- INFORM: Using default data source for NFUEL_CAT.
+2020-11-27 11:07:21.587 --- INFORM: Using default interpolator sequence for ZSF.
+2020-11-27 11:07:21.587 --- INFORM: Using default data source for ZSF.
+2020-11-27 11:07:21.646 --- Processing field 1 of 27 (LANDUSEF)
+2020-11-27 11:07:21.771 --- Processing field 2 of 27 (LU_INDEX)
+2020-11-27 11:07:21.772 --- Processing field 3 of 27 (HGT_M)
+2020-11-27 11:07:21.787 --- Processing field 4 of 27 (SOILTEMP)
+2020-11-27 11:07:21.791 --- Processing field 5 of 27 (SOILCTOP)
+2020-11-27 11:07:21.913 --- Processing field 6 of 27 (SCT_DOM)
+2020-11-27 11:07:21.914 --- Processing field 7 of 27 (SOILCBOT)
+2020-11-27 11:07:22.038 --- Processing field 8 of 27 (SCB_DOM)
+2020-11-27 11:07:22.038 --- Processing field 9 of 27 (ALBEDO12M)
+2020-11-27 11:07:22.179 --- Processing field 10 of 27 (GREENFRAC)
+2020-11-27 11:07:22.265 --- Processing field 11 of 27 (LAI12M)
+2020-11-27 11:07:22.277 --- Processing field 12 of 27 (SNOALB)
+2020-11-27 11:07:22.285 --- Processing field 13 of 27 (CON)
+2020-11-27 11:07:22.296 --- Processing field 14 of 27 (VAR)
+2020-11-27 11:07:22.306 --- Processing field 15 of 27 (OA1)
+2020-11-27 11:07:22.319 --- Processing field 16 of 27 (OA2)
+2020-11-27 11:07:22.331 --- Processing field 17 of 27 (OA3)
+2020-11-27 11:07:22.344 --- Processing field 18 of 27 (OA4)
+2020-11-27 11:07:22.358 --- Processing field 19 of 27 (OL1)
+2020-11-27 11:07:22.369 --- Processing field 20 of 27 (OL2)
+2020-11-27 11:07:22.380 --- Processing field 21 of 27 (OL3)
+2020-11-27 11:07:22.392 --- Processing field 22 of 27 (OL4)
+2020-11-27 11:07:22.403 --- Processing field 23 of 27 (VAR_SSO)
+2020-11-27 11:07:22.671 --- Processing field 24 of 27 (NFUEL_CAT)
+2020-11-27 11:07:24.196 --- Processing field 25 of 27 (ZSF)
+2020-11-27 11:07:24.903 --- Processing field 26 of 27 (DZDXF)
+2020-11-27 11:07:24.934 --- Processing field 27 of 27 (DZDYF)
+2020-11-27 11:07:24.966 --- Optional fields not processed by geogrid:
+2020-11-27 11:07:24.966 ---     LAKE_DEPTH (priority=1, resolution='default', path='/home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/lake_depth/')
+2020-11-27 11:07:24.966 ---     URB_PARAM (priority=1, resolution='default', path='/home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/NUDAPT44_1km/')
+2020-11-27 11:07:24.966 ---     FRC_URB2D (priority=1, resolution='default', path='/home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/urbfrac_nlcd2011/')
+2020-11-27 11:07:24.966 ---     IMPERV (priority=1, resolution='default', path='/home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/nlcd2011_imp_ll_9s/')
+2020-11-27 11:07:24.966 ---     CANFRA (priority=1, resolution='default', path='/home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/nlcd2011_can_ll_9s/')
+2020-11-27 11:07:24.966 ---     EROD (priority=1, resolution='default', path='/home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/erod/')
+2020-11-27 11:07:24.966 ---     CLAYFRAC (priority=1, resolution='default', path='/home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/clayfrac_5m/')
+2020-11-27 11:07:24.966 ---     SANDFRAC (priority=1, resolution='default', path='/home/mljc/wrf/GEOG/geog_high_res_mandatory/WPS_GEOG/sandfrac_5m/')
+2020-11-27 11:07:24.966 ---  *** Successful completion of program geogrid.exe ***
