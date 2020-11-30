@@ -1,7 +1,7 @@
 ![Logo](/Support_Materials/Assets/Logo_MLJC.png)
 
 <h1 align="center">
-  Level Set Implementation - Examples
+  Level Set Implementation - Example
 </h1>
 
 
