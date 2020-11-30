@@ -1,4 +1,4 @@
-![Logo](https://raw.githubusercontent.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/master/Support%20materials/Assets/Logo%20MLJC.png?token=ADFSHLHBDTVFCZFFGWESDN27X3TOG)
+![Logo](/Support_Materials/Assets/Logo_MLJC.png)
 
 <h1 align="center">
   Interpolation
