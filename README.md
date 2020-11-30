@@ -4,9 +4,6 @@
   Physics-Informed Machine Learning Simulator for Wildfire Propagation
 </h1>
 
-[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/blob/rel2/LICENSE.md)
-[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/MachineLearningJournalClub/MLJC-UniTo-ProjectX-2020-public/graphs/contributors)
-
 The aim of this work is to evaluate the feasibility of re-implementing some key parts of the widely used Weather Research and Forecasting [WRF-SFIRE](https://github.com/openwfm/WRF-SFIRE) simulator by replacing its core differential equations numerical solvers with state-of-the-art physics-informed machine learning techniques to solve ODEs and PDEs in order to increase its computational efficiency. The goal is to evaluate the feasibility of a real-time simulator for wildfire spread prediction based on PINNs. Our ML approach is based on Physics Informed Neural Networks implemented in the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) package, which turns an integration problem into a minimization one.  
 
 NeuralPDE Architecture                           |  Standard Integration
@@ -16,7 +13,7 @@ NeuralPDE Architecture                           |  Standard Integration
 
 
 ### [Model Selection](/Model_Selection)
-A collection of our attempts to find a proper model which suites all of our needs. We have ex-plored different architectures within the field of Scientific Ma-chine Learning.  We started our investigations using the DiffE-qFlux.jllibrary, which defines and solves neural ordinarydifferential equations (i.e. ODEs where a neural network defines its derivative function)
+A collection of our attempts to find a proper model which suites all of our needs. We have explored different architectures within the field of Scientific Machine Learning.  We started our investigations using the DiffEqFlux.jllibrary, which defines and solves neural ordinary differential equations (i.e. ODEs where a neural network defines its derivative function). We finally chose [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) because does not require numerical solvers and is interfaced with the very high levels model representation library [ModelingToolkit.jl](https://github.com/SciML/ModelingToolkit.jl)
 
 ### [Interpolation](/BC_Interpolation)
 Some utility notebooks needed to implement key informations (terrain slope, wind field) in our model. It also provides better perfomances in terms of speed and computational load.
@@ -34,6 +31,10 @@ The level-set is the mathematical core for calculating the spread of the fire.  
 Level set equation solution computed by PINNs                           |  Level set equation solution computed by WRF
 :-----------------------------------------------:|:-------------------------:
 ![](/Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.png)  |  ![](Visualizations/WRF/Time%20evolution/contour_wrf_one_fire_evolution.png)
+
+<p align="center" width="200">
+  <img src="Support_Materials/Assets/isom_creek_test_1_surface.gif">
+</p>
 
 
 ### [Euler System Implementation](/Euler_System_Implementation)
