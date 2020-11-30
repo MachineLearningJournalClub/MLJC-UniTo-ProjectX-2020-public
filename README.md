@@ -15,10 +15,10 @@ The aim of this work is to evaluate the feasibility of re-implementing some key 
 
  <div class="row">
   <div class="column">
-    <img src="/Support_Materials/Assets/architecture.png" alt="" style="width:100%">
+    <img src="/Support_Materials/Assets/architecture.png" alt="" style="width:100">
   </div>
   <div class="column">
-    <img src="/Support_Materials/Assets/integration.png" alt="" style="width:100%">
+    <img src="/Support_Materials/Assets/integration.png" alt="" style="width:100">
   </div>
 </div> 
 
