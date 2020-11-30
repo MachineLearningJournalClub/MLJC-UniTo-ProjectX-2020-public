@@ -14,14 +14,6 @@ The Lotka-Volterra equations, also called predator-prey equations, are a system 
 
 &nbsp;
 
-We first solved the equations numerically, using Julia's library *DifferentialEquations* and we plotted the solution, shown below.
-
-! [Numerical solution Lotka-Volterra](/Visualizations/Model_Selection/Numerical%20solution%20Lotka-Volterra.png)
-
-Then we used the previous numerical solution to generate data (plotted above) in order to train through *Flux* library the neural network.
-
- ! [Data_points Lotka-Volterra](/Visualizations/Model_Selection/Data_points%20Lotka-Volterra.png)
-
  ### [Neural ODE 1D](/Model_Selection/DiffEqFlux/NeuralODE1D%20DiffEqFlux.jl)
 
  ### Diffusion Equation:defining a 2-D reaction-diffusion equation. It describes combustion dynamics, similar to WRF-Fire equations.
