@@ -1,4 +1,4 @@
-![Logo](./Visualization_Model selection/Logo MLJC.png)
+![Logo](/Support_Materials/Assets/Logo_MLJC.png)
 <h1 align="center">
   Model Selection
 </h1>
