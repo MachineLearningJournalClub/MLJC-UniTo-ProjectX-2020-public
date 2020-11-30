@@ -92,16 +92,24 @@ OUTPUT = ros_back,ros_wind,ros_slope (these are the rate of spread: backing, due
 
 INPUT = speed,tanphi,cor_wind,cor_slope,i,j,fp
 fp are the fire_params:
+
 vx,vy! wind velocity (m/s)
+
 zsf! terrain height (m)
+
 dzdxf,dzdyf! terrain grad
 
 
 bbb, phisc, phiwc, r_0! spread formula coefficients
+
 fgip! init mass of surface fuel (kg/m^2)
+
 ischap! 1 if chapparal
+
 fuel_time! time to burn to 1/e (s)
+
 fmc_g! fuel moisture contents, ground (1)
+
 nfuel_cat! fuel category (integer values)
 
 The subroutines considers two different cases:
@@ -113,8 +121,11 @@ In this case there are two possibilities:
 
 ros_back,ros_wind,ros_slope are calculated, and than:
 ros=ros_back+ros_wind+ros_slope
+
 k = category number of fuel in the node (i,j)
+
 if ros > 1e-6 and fmc_g >fuel moisture for extintion for fuel type k, so is generated the message:
+
 'fire_ros_cawfe: at ',i,j,' rate of spread',ros,' moisture ', fmc_g(i,j),'> extinction =',fuelmce(k)
 
 Bushfires fire:
