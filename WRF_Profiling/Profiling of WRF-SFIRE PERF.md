@@ -220,6 +220,7 @@ Comments on map scale factors:
 
 **[1]** Janice L. Coen et al.[_WRF-Fire: Coupled Weather–Wildland Fire Modeling with the Weather Research
 and Forecasting Model_](https://doi.org/10.1175/JAMC-D-12-023.1)
+
 **[2]** William C. Skamarock et al. [_A Description of the Advanced Research WRF Model Version 4._](http://dx.doi.org/10.5065/1dfh-6p97), NCAR Technical Notes NCAR/TN-556+STR
 
 
