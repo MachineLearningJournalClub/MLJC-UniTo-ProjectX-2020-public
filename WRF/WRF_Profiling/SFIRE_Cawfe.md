@@ -11,8 +11,8 @@ with
 R_0 = \frac{I_R\varepsilon }{\rho_b \varepsilon Q_i_g)}
 
 While the components of the equation (1) are computed from:
-1) Fuel properties (Table1)
-2) Wind speed component U, named mid-flame-level
+1) Fuel properties (Table1),
+2) Wind speed component U, named mid-flame-level,
 3) terrain slope: 
 tan(\phi) = \bigtriangledown z\cdot n
 (n = normal versor with respect of fire line)
@@ -35,7 +35,7 @@ computes the wind speed and the normal slope of the fire line. Finally, calls th
 
 OUTPUT = ros_back,ros_wind,ros_slope
 INPUT=
-1) i,j coordinate del nodo
+1) i,j coordinates of the node
 2) propx,propy = direction, must be normalized
 3) fp = type(fire_params)
 
@@ -47,9 +47,10 @@ fire_advection=0, &! 0 = fire spread from normal wind/slope (CAWFE), 1 = full sp
 
 if (fire_advection.ne.0):
 1) the wind speed is the total velocity:
-speed = windspeed and slope in the directino normal to the fireline
+speed = windspeed and slope in the direction normal to the fireline
 = sqrt(vx(i,j)*vx(i,j)+ vy(i,j)*vy(i,j))+tiny(speed)
 In Fortran TINY(X) returns the smallest positive (non zero) number in the model of the type of X.
+
 2) slope is the total slope.
 tanphi = sqrt(dzdxf(i,j)* dzdxf(i,j) + dzdyf(i,j)*fp%dzdyf(i,j))+tiny(tanphi)
 with dxdy,dzdx the terrain grad
