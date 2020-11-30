@@ -49,7 +49,7 @@ Level set equation solution computed by PINNs                           |  Level
 This is our attempt to implement the atmospherical model of WRF using PINNS (NeuralPDE.jl). It is necessary because the level set equation (wildfire propagation) is strongly dependent on wind and other atmospheric parameters. Writing and solving the 7-equation Euler system in Julia was really challenging, in fact at the moment we are not aware of any publications where these NeuralPDE.jl and the PINNs are applied to systems of PDE of such complexity.  Unfortunately, the NeuralPDE.jl library is still unable to treat this kind of problem with stability and often incurs errors due to internal divergence calculations. Despite  this,  we  have  been  able  to  obtain  convergence  of  the loss function, although it is not enough to present valid results. We contacted the authors of these libraries, that are still under development, and we are looking forward to continue the development.
 
 ### [Link to Google Drive](https://drive.google.com/drive/folders/1wUCKUyVwC0Pf-e9WlLiqOxRLF0or2D0U)
-In the Google Drive linked above are hosted the results of the simulations performed with WRF. The results are in the standard NetCDF format and can be explored easily using the [Ncview tool](http://meteora.ucsd.edu/~pierce/ncview_home_page.html)
+In the Google Drive linked above are hosted the results of the simulations performed with WRF. The results are in the standard NetCDF format and can be explored easily using the [Ncview tool](http://meteora.ucsd.edu/~pierce/ncview_home_page.html).
 
 
 
