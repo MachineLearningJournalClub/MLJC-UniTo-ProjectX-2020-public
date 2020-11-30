@@ -1,7 +1,7 @@
 using DelimitedFiles
 using Plots
 
-tensor = readdlm("C:/Users/jamesjun/Desktop/Simone/ProjectX2020/BCI/ProjectX2020/Interpolation/tensor.txt")
+tensor = readdlm("C:path")
 tensor = reshape(tensor, (420,420,31))
 tensor = permutedims(tensor, [2,1,3])
 tensor = tensor
