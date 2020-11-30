@@ -17,6 +17,9 @@ A collection of our attempts to find a proper model which suites all of our need
 
 ### [Interpolation](/BC_Interpolation)
 Some utility notebooks needed to implement key informations (terrain slope, wind field) in our model. It also provides better perfomances in terms of speed and computational load.
+<p align="center">
+  <img src="/BC_Interpolation/Interpolation_Example/ExampleScalar2D.png">
+</p>
 
 ### [WRF](/WRF)
 The results obtained by our simulation performed with the Weather Research Forecast system. Firstly we have done a profiling with the perf tool, in order to mesure the overhead of WRF's subroutines. Later we run several simulations of fire and atmospherical events. We then kept the result for the Isom Creek and OneFire cases.
