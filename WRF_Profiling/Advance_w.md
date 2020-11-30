@@ -23,16 +23,15 @@ line 1178
 
 advances the implicit w (vertical velocity) and geopotential equations.
 INPUT =
-config_flags (da grid_config_rec_type) : le config_flags sono quelle info prese dal file namelist_input.
-Namelist.input è un file che l’user può modificare in base alle propie preferenze per impostare molti
-parametri del modello.
+1) config_flags (da grid_config_rec_type) : the config_flags are informations taken from the namelist_imput file.
+The namelist_input file is the file from the user editable. Here the user specifies his preferencies and desired parameters for the simulation.
 
-declarations for the stuff coming in:
+2) declarations for the stuff coming in:
 
 - ids,ide, jds,jde, kds,kde (domain dimensions)
 - ims,ime, jms,jme, kms,kme (memory dimensions)
 - its,ite, jts,jte, kts,kte (tile dimensions)
-questi sono indici tratti da:
+All these are indices taken from:
 !-- ids start index for i in domain (WRF/frame/module_domain.F)
 !-- ide end index for i in domain
 !-- jds start index for j in domain
@@ -54,8 +53,7 @@ questi sono indici tratti da:
 !-- kts start index for k in tile
 !-- kte end index for k in tile
 
-Ora alenco altri input di cui è specificata la dimensione (questi input non ho ancora capito da dove vengono
-presi e soprattuto cosa sono):
+3) Others input of which dimension is specified (I am still trying to understand from where these input came from):
 dimensions( ims:ime , kms:kme , jms:jme ) :: top_lid
 dimensions( ims:ime , kms:kme, jms:jme ) ::
 rw_tend,ww,w_save,u,v,t_2,t_1,ph_1,phb,ph_tend,alpha,gamma,a,c2a,cqw, alb, alt
@@ -68,9 +66,8 @@ WRF/Registry/registry.hyb_coord, ma non ho capito cosa sono)
 OUTPUT =
 t_2ave,w,ph
 
-Cosa fa la subroutine:
-Possibili condizioni al contorno specificate in namelist.input (file che l’user può modificare prima di far
-girare il modello):
+What the subroutine makes:
+Possible boundary conditions in the namelist.input file:
 
 ## specified (max_dom) .false. specified boundary conditions (only can be used for to domain 1)
 
@@ -78,22 +75,22 @@ girare il modello):
 
 ## periodic_x (max_dom) .false. periodic boundary conditions in x direction
 
-Domain, memory e tile dimensions vengono impostate in base alle condizioni al contorno periodiche
-specificate in namelist.input
-Calcola pi = 4 * atan(1.)
-Estrae dampcoeff dal file namelist.input
+Domain, memory e tile dimensions are set according to the periodic boundary conditions in namelist.input.
+
+The subroutine calculates pi = 4 * atan(1.)
+Extracts dampcoeff from the namelist.input file
 
 ## dampcoef (max_dom) 0. damping coefficient (see damp_opt)
 
+and calculates dampmag = dts * dampcoef
 
-e calcola dampmag = dts * dampcoef
-Estrae zdamp dal file namelist.input
+Extracts zdamp from the namelist.input file
 
 ## zdamp (max_dom) 5000 damping depth (m) from model top
 
-e calcola hdepth= zdamp
+and calculates hdepth= zdamp
 
-Esegue ora il calcolo delle quazioni phi e w (le equazioni 2.23 e 2.32)
+Now, the calulation of phi and w equations is executed (equations 2.23 e 2.32 from WRF Users' Guide)
 1) phi equation is:
 partial d/dt(rho phi/my) = -mx partial d/dx(phi rho u/my)-mx partial d/dy(phi rho v/mx)-
 partial d/dz(phi rho w/my) + rho g w/my
