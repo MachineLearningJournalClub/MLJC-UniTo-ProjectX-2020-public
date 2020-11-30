@@ -1,7 +1,11 @@
-# MODULO fr_sfire_phys_mod_fire_ros_cawfe
+![Logo](/Support_Materials/Assets/Logo_MLJC.png)
+<h1 align="center">
+  MODULO fr_sfire_phys_mod_fire_ros_cawfe
+</h1>
+
 
 Fire spread rate
-Fire spread rate è dato dalla formula di Rothermel modificata:
+Fire spread rate è dato dalla formula di Rothermel modificata [[1]](#1):
 
 con
 I componenti dell’equazione (1) sono computati da:
@@ -94,5 +98,11 @@ Se excess>0:
 ## ros_slope = ros_slope - excess*ros_slope/(ros_wind+ros_slope)
 
 fine subroutine fire_ros_cawfe
+
+###  References
+<a id="1">[1]</a>
+Rothermel, Richard C. (1972).
+[_A Mathematical Model for Predicting Fire
+Spread in Wildland Fires._](http://www.treesearch.fs.fed.us/pubs/32533)
 
 
