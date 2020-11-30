@@ -1,3 +1,9 @@
+![Logo](/Support_Materials/Assets/Logo_MLJC.png)
+<h1 align="center">
+  SFIRE Profiling
+</h1>
+
+
 How WRF calls SFIRE
 The defined interface to SFIRE is between WRFV3/phys/module_fr_sfire_driver_wrf.F and subroutine
 sfire_driver_em in WRFV3/phys/module_fr_sfire_driver.F
