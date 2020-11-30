@@ -17,8 +17,8 @@ While the components of the equation (1) are computed from:
 1) Fuel properties;
 2) Wind speed component U, named mid-flame-level;
 3) terrain slope: 
-tan(\phi) = \bigtriangledown z\cdot n
-(n = normal versor with respect of fire line)
+tan(\phi) = \bigtriangledown z\cdot n 
+with n the normal versor with respect of fire line.
 
 Spread rate can also be provided from the equation:
 
@@ -26,18 +26,27 @@ S = max{S_0,R_0 + c min {e,max{0,U}^b} + d max {0,tan\phi}^2}
 
 With all his coefficients derived from the fuel properties. These parameters are memorized for every grid point.
 
-While U = U \cdot n is the normal component of wind with respect to the fire line.
+While 
+U = U \cdot n
+
+is the normal component of wind with respect to the fire line.
 
 Fortran code:
+
 INTENT(IN) input only parameter (non possono essere usati per assegnare un valore)
+
 INTENT(OUT) output only parameter
+
 INTENT(INOUT) input/output parameter
 
 subroutine fire_ros(ros_back,ros_wind,ros_slope, & propx,propy,i,j,fp,ierrx,msg)
+
 computes the wind speed and the normal slope of the fire line. Finally, calls the fire_ros_cawfe subroutine.
 
 OUTPUT = ros_back,ros_wind,ros_slope
+
 INPUT=
+
 1) i,j coordinates of the node
 2) propx,propy = direction, must be normalized
 3) fp = type(fire_params)
@@ -49,30 +58,38 @@ From the module_fr_sfire_util module, the utility fire_advection is defined:
 fire_advection=0, &! 0 = fire spread from normal wind/slope (CAWFE), 1 = full speed projected
 
 if (fire_advection.ne.0):
+
 1) the wind speed is the total velocity:
 speed = windspeed and slope in the direction normal to the fireline
 = sqrt(vx(i,j)*vx(i,j)+ vy(i,j)*vy(i,j))+tiny(speed)
+
 In Fortran TINY(X) returns the smallest positive (non zero) number in the model of the type of X.
 
 2) slope is the total slope.
 tanphi = sqrt(dzdxf(i,j)* dzdxf(i,j) + dzdyf(i,j)*fp%dzdyf(i,j))+tiny(tanphi)
 with dxdy,dzdx the terrain grad
+
 3) calculates the cos of the wind and the slope (cor_wind and cor_slope)
 
 if not:
+
 1) the wind velocity is in the diffusion direction;
 2) slope is in the diffusion direction;
 3) cor_wind e cor_slope = 1)
 
 endif
+
 call fire_ros_cawfe(ros_back,ros_wind,ros_slope, & speed,tanphi,cor_wind,cor_slope,i,j,fp,ierrx,msg)
 
 end of the fire_ros subroutine.
 
 
 subroutine fire_ros_cawfe(ros_back,ros_wind,ros_slope, & speed,tanphi,cor_wind,cor_slope,i,j,fp,ierrx,msg)
+
 Calculates the rate of spread of wind speed and slope.
+
 OUTPUT = ros_back,ros_wind,ros_slope (these are the rate of spread: backing, due to wind, due to slope)
+
 INPUT = speed,tanphi,cor_wind,cor_slope,i,j,fp
 fp are the fire_params:
 vx,vy! wind velocity (m/s)
