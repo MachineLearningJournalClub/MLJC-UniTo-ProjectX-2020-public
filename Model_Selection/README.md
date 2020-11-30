@@ -4,7 +4,7 @@
 </h1>
 
 
-### [Lotka-Volterra](/Model_Selection/To divide/ODE Lotka-Volterra DiffEqFlux.jl)
+### [Lotka-Volterra](/Model_Selection/DiffEqFlux/ODE Lotka-Volterra DiffEqFlux.jl)
 
 Following Chris Rackauckas' approach [[1]](#1), we reimplemented the following Lotka-Volterra equations, embedding the ODE into a neural network using Julia's library *DiffEqFlux*.
 
@@ -16,24 +16,34 @@ The Lotka-Volterra equations, also called predator-prey equations, are a system 
 
 We first solved the equations numerically, using Julia's library *DifferentialEquations* and we plotted the solution, shown below.
 
-! [Numerical solution Lotka-Volterra](./Visualization_Model selection/Numerical solution Lotka-Volterra.png)
+! [Numerical solution Lotka-Volterra](/Visualizations/Model_Selection/Numerical%20solution%20Lotka-Volterra.png)
 
 Then we used the previous numerical solution to generate data (plotted above) in order to train through *Flux* library the neural network.
 
- ! [Data_points Lotka-Volterra](./Visualization_Model selection/Data_points Lotka-Volterra.png)
+ ! [Data_points Lotka-Volterra](/Visualizations/Model_Selection/Data_points%20Lotka-Volterra.png)
 
- ### [Neural ODE 1D](NeuralODE1D DiffEqFlux)
+ ### [Neural ODE 1D](/Model_Selection/DiffEqFlux/NeuralODE1D%20DiffEqFlux.jl)
 
- ### [Diffusion Equation]() Defining a 2-D reaction-diffusion equation. It describes combustion dynamics, similar to WRF-Fire equations.
+ ### Diffusion Equation:defining a 2-D reaction-diffusion equation. It describes combustion dynamics, similar to WRF-Fire equations.
 
- + #### [Diffusion Equation with a NN]()
- + #### [Diffusion Equation with a CNN]()
- + #### [Numerical Diffusion Equation]()
- + #### [Diffusion Equation NeuralBenchmark]() We employ an UPDE solved based on a NN combined with a CNN.
+ + #### [Diffusion Equation with a NN](/Model_Selection/DiffEqFlux/DiffusionEquation_NN.jl)
+ + #### [Diffusion Equation with a CNN](/Model_Selection/DiffEqFlux/DiffusionEquation_CNN.jl)
+ + #### [Numerical Diffusion Equation](/Model_Selection/DiffEqFlux/DiffusionEquationNumericalBenchmark.jl)
+ + #### [Diffusion Equation NeuralBenchmark](/Model_Selection/DiffEqFlux/DiffusionEquationNeuralBenchmark.jl). We employ an UPDE solved based on a NN combined with a CNN.
 
- ### [Fisher KPP]()
- + #### [Fisher KPP example]()
- + #### [Fisher KPP example with RNN resolution]()
+ ### Fisher KPP
+ + #### [Fisher KPP example with CNN resolution](/Model_Selection/DiffEqFlux/FisherKPPexample1D.jl)
+ + #### [Fisher KPP example with RNN resolution](/Model_Selection/DiffEqFlux/FisherKPPexample1D_pipeline(NN,CNN,RNN).jl)
+ 
+ ### [Heat equation](/Model_Selection/NeuralPDE/heat_equation.jl)
+ 
+ ### [Poisson's Equation](/Model_Selection/NeuralPDE/poisson2D.jl)
+ 
+ ### Burger's equation
+ + #### [Burger's equation](/Model_Selection/DiffEqFlux/Burger.jl)
+ + #### [Burger's equation: comparison between neural and numerical approach](/Model_Selection/NeuralPDE/burger_neural_vs_num.jl)
+ + #### [Non Linear Burger's equation](/Model_Selection/NeuralPDE/BurgerNonLinear.jl)
+ 
 
 
 
