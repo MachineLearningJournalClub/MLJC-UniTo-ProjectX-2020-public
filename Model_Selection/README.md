@@ -4,7 +4,7 @@
 </h1>
 
 
-### [Lotka-Volterra](/Model_Selection/DiffEqFlux/ODE Lotka-Volterra DiffEqFlux.jl)
+### [Lotka-Volterra](/Model_Selection/DiffEqFlux/ODE%20Lotka-Volterra%20DiffEqFlux.jl)
 
 Following Chris Rackauckas' approach [[1]](#1), we reimplemented the following Lotka-Volterra equations, embedding the ODE into a neural network using Julia's library *DiffEqFlux*.
 
