@@ -29,7 +29,7 @@ The level-set is the mathematical core for calculating the spread of the fire.  
 
 
 <p align="center">
-  <img src="Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.pdf">
+  <img src="Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.png">
 </p>
 
 
