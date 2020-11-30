@@ -36,7 +36,7 @@ The level-set is the mathematical core for calculating the spread of the fire.  
 
 Level set equation solution computed by PINNs                           |  Level set equation solution computed by WRF
 :-----------------------------------------------:|:-------------------------:
-![](/Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.png)  |  ![](Visualizations/WRF/Time%20 evolution/contour_wrf_one_fire_evolution.png)
+![](/Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.png)  |  ![](Visualizations/WRF/Time%20evolution/contour_wrf_one_fire_evolution.png)
 
 
 ### [Euler System Implementation](/Euler_System_Implementation)
