@@ -1,11 +1,10 @@
-# Profiling of WRF-SFIRE with Linux’s perf tool
+![Logo](/Support_Materials/Assets/Logo_MLJC.png)
 
-#### University of Turin’s team for ProjectX Climate Change ML competition
+# Profiling of WRF-SFIRE with Linux’s perf tool
 
 ## Foreground: how does perf works and what does it’s output means
 
-perf is a performance counter. As stated on it’s homepage (https://perf.wiki.kernel.org/index.php/
-Main_Page):
+perf is a performance counter. As stated on it’s [homepage](https://perf.wiki.kernel.org/index.php/Main_Page):
 
 ```
 Performance counters are CPU hardware registers that count hardware events such as
@@ -219,9 +218,8 @@ Comments on map scale factors:
 
 ### REFERENCES:
 
-**[1]** _WRF-Fire: Coupled Weather–Wildland Fire Modeling with the Weather Research
-and Forecasting Model,_ JANICE L. COEN _et al._ , DOI: 10.1175/JAMC-D-12-023.
-**[2]** _A Description of the Advanced Research WRF Model Version 4,_ William C. Skamarock _et al.,_
-NCAR Technical Notes NCAR/TN-556+STR
+**[1]** Janice L. Coen et al.[_WRF-Fire: Coupled Weather–Wildland Fire Modeling with the Weather Research
+and Forecasting Model_](https://doi.org/10.1175/JAMC-D-12-023.1)
+**[2]** William C. Skamarock et al. [_A Description of the Advanced Research WRF Model Version 4._](http://dx.doi.org/10.5065/1dfh-6p97), NCAR Technical Notes NCAR/TN-556+STR
 
 
