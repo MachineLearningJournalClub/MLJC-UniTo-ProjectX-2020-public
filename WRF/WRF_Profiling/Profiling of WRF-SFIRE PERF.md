@@ -45,7 +45,7 @@ By looking at these datas we concluded that:
 5. a significant portion of the physics-induced slowdown is due to the WRF model itself and
     not the FIRE model itself
 
-The equations reported below are either from [1] or [2]
+The equations reported below are either from [[1]](#1) or [[2]](#2). 
 
 ## __module_fr_sfire_phys_MOD_fire_ros_cawfe
 
@@ -217,10 +217,11 @@ Comments on map scale factors:
 ! multiply by (my/mx):
 
 ### REFERENCES:
-
-**[1]** Janice L. Coen et al.[_WRF-Fire: Coupled Weather–Wildland Fire Modeling with the Weather Research
+<a id="1">**[1]**</a>
+Janice L. Coen et al.[_WRF-Fire: Coupled Weather–Wildland Fire Modeling with the Weather Research
 and Forecasting Model_](https://doi.org/10.1175/JAMC-D-12-023.1)
 
-**[2]** William C. Skamarock et al. [_A Description of the Advanced Research WRF Model Version 4._](http://dx.doi.org/10.5065/1dfh-6p97), NCAR Technical Notes NCAR/TN-556+STR
+<a id="2">**[2]**</a>
+William C. Skamarock et al. [_A Description of the Advanced Research WRF Model Version 4._](http://dx.doi.org/10.5065/1dfh-6p97), NCAR Technical Notes NCAR/TN-556+STR
 
 
