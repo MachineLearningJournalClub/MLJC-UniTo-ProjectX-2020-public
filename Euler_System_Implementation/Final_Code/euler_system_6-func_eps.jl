@@ -1,3 +1,28 @@
+#___  ____       ___ _____   _   _       _ _
+#|  \/  | |     |_  /  __ \ | | | |     (_| |
+#| .  . | |       | | /  \/ | | | |_ __  _| |_ ___
+#| |\/| | |       | | |     | | | | '_ \| | __/ _ \
+#| |  | | |___/\__/ | \__/\ | |_| | | | | | || (_) |
+#_______\_____\____/ \____/  _____|_|___|_____\_____ _____ _____
+#| ___ \        (_)         | | \ \ / / / __  |  _  / __  |  _  |
+#| |_/ _ __ ___  _  ___  ___| |_ \ V /  `' / /| |/' `' / /| |/' |
+#|  __| '__/ _ \| |/ _ \/ __| __|/   \    / / |  /| | / / |  /| |
+#| |  | | | (_) | |  __| (__| |_/ /^\ \ ./ /__\ |_/ ./ /__\ |_/ /
+#\_|  |_|  \___/| |\___|\___|\__\/   \/ \_____/\___/\_____/\___/
+#              _/ |
+#             |__/
+#
+# This code is part of the proposal of the team "MLJC UniTo" - University of Turin
+# for "ProjectX 2020" Climate Change for AI.
+# The code is licensed under MIT 3.0
+# Please read readme or comments for credits and further information.
+
+# Compiler: Julia 1.5
+
+# Short description of this file: Implementation of Euler system with 6 target
+#functions, considering η as a constant, and dealing with functions at
+#denominator using an ϵ>0.
+
 using NeuralPDE, Flux, ModelingToolkit, GalacticOptim, Optim, DiffEqFlux
 using Plots, PyPlot
 using DifferentialEquations, DiffEqBase, DiffEqOperators, LinearAlgebra, OrdinaryDiffEq
@@ -26,12 +51,12 @@ qm = u5(x,y,η,t,θ)
 z  = u6(x,y,η,t,θ)
 
 #physical constants
-g  = 9.81 #constant or dependent on eta ?
+g  = 9.81 #constant
 γ  = 1.4 #air cp/cv=1.4
 ρd = 1.225 #dry air density
 p0 = 101325 #reference pressure 10^5 Pa
 Rd = 8.31 #gas constant for dry air
-ηc = 0.2 #page 8 of Advanced Research WRF M4
+ηc = 0.2 #page 8 of Advanced Research WRF V4 (http://dx.doi.org/10.5065/1dfh-6p97))
 
 #simulation inputs
 sum_of_qs = 0.1 #read from file
@@ -42,7 +67,7 @@ sum_of_qs = 0.1 #read from file
 Δy = 1 #dummy
 
 #scale factors
-dist = x^2 + y^2 #dummy for distance on earth  #MANFRIN
+dist = x^2 + y^2 #dummy for distance on earth  (MANFRIN's advice)
 Dxd  = 2*x #Dx(dist)
 Dyd  = 2*y #Dy(dist)
 mx   = Δx/max(abs(dist),epsilon)

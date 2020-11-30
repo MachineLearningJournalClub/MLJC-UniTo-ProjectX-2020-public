@@ -1,3 +1,27 @@
+#___  ____       ___ _____   _   _       _ _
+#|  \/  | |     |_  /  __ \ | | | |     (_| |
+#| .  . | |       | | /  \/ | | | |_ __  _| |_ ___
+#| |\/| | |       | | |     | | | | '_ \| | __/ _ \
+#| |  | | |___/\__/ | \__/\ | |_| | | | | | || (_) |
+#_______\_____\____/ \____/  _____|_|___|_____\_____ _____ _____
+#| ___ \        (_)         | | \ \ / / / __  |  _  / __  |  _  |
+#| |_/ _ __ ___  _  ___  ___| |_ \ V /  `' / /| |/' `' / /| |/' |
+#|  __| '__/ _ \| |/ _ \/ __| __|/   \    / / |  /| | / / |  /| |
+#| |  | | | (_) | |  __| (__| |_/ /^\ \ ./ /__\ |_/ ./ /__\ |_/ /
+#\_|  |_|  \___/| |\___|\___|\__\/   \/ \_____/\___/\_____/\___/
+#              _/ |
+#             |__/
+#
+# This code is part of the proposal of the team "MLJC UniTo" - University of Turin
+# for "ProjectX 2020" Climate Change for AI.
+# The code is licensed under MIT 3.0
+# Please read readme or comments for credits and further information.
+
+# Compiler: Julia 1.5
+
+# Short description of this file: Implementation of Euler system with 7 target
+#functions.
+
 using NeuralPDE, Flux, ModelingToolkit, GalacticOptim, Optim, DiffEqFlux
 using Plots, PyPlot
 using DifferentialEquations, DiffEqBase, DiffEqOperators, LinearAlgebra, OrdinaryDiffEq
@@ -31,7 +55,7 @@ g  = 9.81 #constant or dependent on eta ?
 ρd = 1.225 #dry air density
 p0 = 101325 #reference pressure 10^5 Pa
 Rd = 8.31 #gas constant for dry air
-ηc = 0.2 #page 8 of Advanced Research WRF M4
+ηc = 0.2 #page 8 of Advanced Research WRF V4(http://dx.doi.org/10.5065/1dfh-6p97)
 
 #simulation inputs
 sum_of_qs = 0.1 #read from file
@@ -199,7 +223,7 @@ input_ = length(domains)
 output = length(eqs)
 
 n      = 16
-chain = FastChain(FastDense(input_,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,output)) 
+chain = FastChain(FastDense(input_,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,output))
 
 
 q_strategy = NeuralPDE.QuadratureTraining(algorithm =CubaCuhre(),reltol=1e-8,abstol=1e-8,maxiters=150)
@@ -213,12 +237,6 @@ prob = NeuralPDE.discretize(pde_system,discretization)
 
 #NumDiscretization = MOLFiniteDifference(0.1)
 #numProb = DiffEqBase.discretize(pde_system, NumDiscretization)
-
-#Remember to clearly explain in D3 that in levelset equation we compare
-#  WRF out with NeuralPDE out, while in this system we compare the NeuralPDE
-#  with a numerical result that uses the same numerical solver (RK3) of WRF
-#  but the calculation is done in Julia. Remember to specify that this is a
-#  feasibility study.
 
 #numSol = DifferentialEquations.solve(numProb, RK4(), reltol=1e-5,abstol=1e-5)
 
