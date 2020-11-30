@@ -60,13 +60,16 @@ fire_advection=0, &! 0 = fire spread from normal wind/slope (CAWFE), 1 = full sp
 if (fire_advection.ne.0):
 
 1) the wind speed is the total velocity:
+
 speed = windspeed and slope in the direction normal to the fireline
 = sqrt(vx(i,j)*vx(i,j)+ vy(i,j)*vy(i,j))+tiny(speed)
 
 In Fortran TINY(X) returns the smallest positive (non zero) number in the model of the type of X.
 
 2) slope is the total slope.
+
 tanphi = sqrt(dzdxf(i,j)* dzdxf(i,j) + dzdyf(i,j)*fp%dzdyf(i,j))+tiny(tanphi)
+
 with dxdy,dzdx the terrain grad
 
 3) calculates the cos of the wind and the slope (cor_wind and cor_slope)
@@ -91,6 +94,7 @@ Calculates the rate of spread of wind speed and slope.
 OUTPUT = ros_back,ros_wind,ros_slope (these are the rate of spread: backing, due to wind, due to slope)
 
 INPUT = speed,tanphi,cor_wind,cor_slope,i,j,fp
+
 fp are the fire_params:
 
 vx,vy! wind velocity (m/s)
@@ -115,11 +119,14 @@ nfuel_cat! fuel category (integer values)
 The subroutines considers two different cases:
 
 Not bushfires fire: (.not. fp%ischap(i,j) > 0.)
+
 In this case there are two possibilities:
+
 1) if (ibeh = 1) use Rothermel formula
 2) and 3) use the Rothermel formula modified.
 
 ros_back,ros_wind,ros_slope are calculated, and than:
+
 ros=ros_back+ros_wind+ros_slope
 
 k = category number of fuel in the node (i,j)
@@ -129,10 +136,14 @@ if ros > 1e-6 and fmc_g >fuel moisture for extintion for fuel type k, so is gene
 'fire_ros_cawfe: at ',i,j,' rate of spread',ros,' moisture ', fmc_g(i,j),'> extinction =',fuelmce(k)
 
 Bushfires fire:
+
 In this case spread rate has no dependency on fuel character, only windspeed
+
 ros_back,ros_wind,ros_slope are calculated.
-Correcions of the 3 parameters are calculated:
-Finally: is calculated:
+
+Correcions of the 3 parameters are calculated.
+
+Finally, is calculated:
 
 excess = ros_back + ros_wind + ros_slope - ros_max
 
