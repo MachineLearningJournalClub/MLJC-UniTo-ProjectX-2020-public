@@ -5,9 +5,12 @@
 
 
 FIRE SPREAD RATE
+
 Fire spread rate comes from the modified Rothermel formula:
 S = R_0(1+\phi W+\phi s)  (1)
-with 
+
+with
+
 R_0 = \frac{I_R\varepsilon }{\rho_b \varepsilon Q_i_g)}
 
 While the components of the equation (1) are computed from:
