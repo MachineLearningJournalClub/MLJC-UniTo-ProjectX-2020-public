@@ -1,14 +1,25 @@
-#=
-TO DO 
-Dare significato alla griglia   x y t
-Far accettare z 
-includere dep temporale di wind
-dipendenza spaziale del fuel
-più punti di inizione (boundary) anche in tempi diversi
-=#
+#___  ____       ___ _____   _   _       _ _
+#|  \/  | |     |_  /  __ \ | | | |     (_| |
+#| .  . | |       | | /  \/ | | | |_ __  _| |_ ___
+#| |\/| | |       | | |     | | | | '_ \| | __/ _ \
+#| |  | | |___/\__/ | \__/\ | |_| | | | | | || (_) |
+#_______\_____\____/ \____/  _____|_|___|_____\_____ _____ _____
+#| ___ \        (_)         | | \ \ / / / __  |  _  / __  |  _  |
+#| |_/ _ __ ___  _  ___  ___| |_ \ V /  `' / /| |/' `' / /| |/' |
+#|  __| '__/ _ \| |/ _ \/ __| __|/   \    / / |  /| | / / |  /| |
+#| |  | | | (_) | |  __| (__| |_/ /^\ \ ./ /__\ |_/ ./ /__\ |_/ /
+#\_|  |_|  \___/| |\___|\___|\__\/   \/ \_____/\___/\_____/\___/
+#              _/ |
+#             |__/
+#
+# This code is part of the proposal of the team "MLJC UniTo" - University of Turin
+# for "ProjectX 2020" Climate Change for AI.
+# The code is licensed under MIT 3.0
+# Please read readme or comments for credits and further information.
 
+# Compiler: Julia 1.5
 
-
+# Short description of this file: Level Set Quadrature
 
 using NeuralPDE
 using Quadrature, Cubature, Cuba
@@ -57,7 +68,7 @@ weight = [7.,  7.,  7., 180., 100., 100., 100., 900., 900., 900., 900., 900., 90
 FuelNumber = 1
 
 #=
-a     = windrf[FuelNumber]          #thoose numbers should be dependent on position
+a     = windrf[FuelNumber]          #those numbers should be dependent on position
 zf    =
 z0    =
 w     = weight[FuelNumber]
@@ -79,7 +90,7 @@ w     = weight[FuelNumber]/60           #seconds to minutes
 wl    = fgi[FuelNumber]*0.204816        #kg*m^-2 to lb*ft^-2
 δm    = fueldepthm[FuelNumber]*3.28084  #m to ft
 sigma = savr[FuelNumber]/3.28084        #m^-1 to ft^-1
-Mx    = fuelmce[FuelNumber]   
+Mx    = fuelmce[FuelNumber]
 ρP    = fueldens[FuelNumber]*0.062428   #kg*m^-3 to lb*ft^-3
 ST    = st[FuelNumber]
 SE    = se[FuelNumber]
@@ -187,7 +198,7 @@ bcs = [u(0,x,y,θ) ~ ((x - x0)^2 + (y - y0)^2)^0.5 - initialSpread*dx,
 
 ## NEURAL NETWORK
 n = 16
-chain = FastChain(FastDense(3,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,1)) 
+chain = FastChain(FastDense(3,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,1))
 q_strategy = NeuralPDE.QuadratureTraining(algorithm =CubaCuhre(),reltol=1e-8,abstol=1e-8,maxiters=100)
 discretization = NeuralPDE.PhysicsInformedNN([dt,dx,dy],chain,strategy = q_strategy)
 
@@ -210,7 +221,7 @@ prob = discretize(pde_system, discretization)
 
 a_1 = time_ns()
 
-res = GalacticOptim.solve(prob, GalacticOptim.ADAM(0.02), progress = true; cb = cb, maxiters=500) 
+res = GalacticOptim.solve(prob, GalacticOptim.ADAM(0.02), progress = true; cb = cb, maxiters=500)
 b_1 = time_ns()
 show((b_1-a_1)/10^9)
 
@@ -229,20 +240,20 @@ FPS = 10
 
 if extrapolate
     timeFactor  = 2.5 #used to extrapolate the prediction outside the domain
-    xAxisFactor = 1.25 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!! 
+    xAxisFactor = 1.25 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
     yAxisFactor = 1.25
 else
     timeFactor  = 1 #used to extrapolate the prediction outside the domain
-    xAxisFactor = 1 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!! 
+    xAxisFactor = 1 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
     yAxisFactor = 1
 end
 
 if domainShape == shape[1]
-    xs = 0.0 : dx : xwidth*xAxisFactor 
-    ys = 0.0 : dy : ywidth*yAxisFactor 
+    xs = 0.0 : dx : xwidth*xAxisFactor
+    ys = 0.0 : dy : ywidth*yAxisFactor
 elseif domainShape == shape[2]
-    xs = -xwidth*0.5*xAxisFactor : dx : xwidth*0.5*xAxisFactor 
-    ys = -ywidth*0.5*yAxisFactor : dy : ywidth*0.5*yAxisFactor 
+    xs = -xwidth*0.5*xAxisFactor : dx : xwidth*0.5*xAxisFactor
+    ys = -ywidth*0.5*yAxisFactor : dy : ywidth*0.5*yAxisFactor
 end
 ts = 0 : dt*tStepFactor : tmax*timeFactor
 
@@ -253,19 +264,19 @@ maxlim = maximum(maximum(u_predict[t]) for t = 1:length(ts))
 minlim = minimum(minimum(u_predict[t]) for t = 1:length(ts))
 
 result = @animate for time = 1:length(ts)
-    Plots.plot(xs, ys, u_predict[time],st=:surface,camera=(30,30), zlim=(minlim,maxlim), clim=(minlim,maxlim), 
+    Plots.plot(xs, ys, u_predict[time],st=:surface,camera=(30,30), zlim=(minlim,maxlim), clim=(minlim,maxlim),
                 title = string("ψ: max = ",round(maxlim, digits = 3)," min = ", round(minlim, digits = 3),"\\n t = ",
-                round((time - 1)/tMeshNum*tStepFactor*tmax, digits = 3))) 
+                round((time - 1)/tMeshNum*tStepFactor*tmax, digits = 3)))
 end
 gif(result, "level_set.gif", fps = FPS)
 
 if maxlim > 0 && minlim < 0
     print("GOOD")
     result_level = @animate for time = 1:length(ts)
-        Plots.contour(xs, ys, u_predict[time::Int], levels = [0], title = string("Fireline \\n t = ", 
+        Plots.contour(xs, ys, u_predict[time::Int], levels = [0], title = string("Fireline \\n t = ",
         round((time - 1)/tMeshNum*tStepFactor*tmax, digits = 3)), legend = false)
     end
-    gif(result_level, "fireline.gif", fps = FPS)    
+    gif(result_level, "fireline.gif", fps = FPS)
 else
     print("BAD")    #in this case the level set is either always negative or always positive, so the result is meaningless
 end
@@ -278,7 +289,7 @@ if printBCSComp
     MSE = sum(diff)/(length(xs)*length(ys))
 
     bcsPlot = Plots.plot(xs,ys,z_s, st=:surface,  title = "Initial Condition")    #camera=(30,30)
-    bcsPredict = Plots.plot(xs, ys, u_predict[1],st=:surface, zlim=(minlim,maxlim), clim=(minlim,maxlim),  
+    bcsPredict = Plots.plot(xs, ys, u_predict[1],st=:surface, zlim=(minlim,maxlim), clim=(minlim,maxlim),
         title = string("ψ: max = ",round(maxlim, digits = 3)," min = ", round(minlim, digits = 3),"\\n t = ",0))
     bcsDiff = Plots.plot(xs,ys,diff, st=:surface,  title = string("MSE = ", MSE))
     bcsFirelinePredict = Plots.contour(xs, ys, u_predict[1], levels = [0], title = string("Fireline \\n t = ", 0))

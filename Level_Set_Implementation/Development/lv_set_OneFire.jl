@@ -1,3 +1,26 @@
+#___  ____       ___ _____   _   _       _ _
+#|  \/  | |     |_  /  __ \ | | | |     (_| |
+#| .  . | |       | | /  \/ | | | |_ __  _| |_ ___
+#| |\/| | |       | | |     | | | | '_ \| | __/ _ \
+#| |  | | |___/\__/ | \__/\ | |_| | | | | | || (_) |
+#_______\_____\____/ \____/  _____|_|___|_____\_____ _____ _____
+#| ___ \        (_)         | | \ \ / / / __  |  _  / __  |  _  |
+#| |_/ _ __ ___  _  ___  ___| |_ \ V /  `' / /| |/' `' / /| |/' |
+#|  __| '__/ _ \| |/ _ \/ __| __|/   \    / / |  /| | / / |  /| |
+#| |  | | | (_) | |  __| (__| |_/ /^\ \ ./ /__\ |_/ ./ /__\ |_/ /
+#\_|  |_|  \___/| |\___|\___|\__\/   \/ \_____/\___/\_____/\___/
+#              _/ |
+#             |__/
+#
+# This code is part of the proposal of the team "MLJC UniTo" - University of Turin
+# for "ProjectX 2020" Climate Change for AI.
+# The code is licensed under MIT 3.0
+# Please read readme or comments for credits and further information.
+
+# Compiler: Julia 1.5
+
+# Short description of this file: Level Set One Fire Trial 
+
 using NeuralPDE
 using Quadrature, Cubature, Cuba
 using Flux, ModelingToolkit, GalacticOptim, Optim, DiffEqFlux
@@ -47,7 +70,7 @@ y0         = [0.0]
 xSpread    = [5.0]      #Fire shape factors
 ySpread    = [0.15]
 tIgnition  = [0.0]      #Fire's time of ignition
-amplitude  = [0.2]#[(max(1.0,10*dx))*sqrt(xSpread[1]*ySpread[1])]   #Fire's initial spread (radius if circle)
+amplitude  = [0.2]  #[(max(0.1,10*dx))*sqrt(xScale*yScale),(max(0.1,10*dx))*sqrt(xScale*yScale)]      #Fire's initial spread (radius if circle)
 
 domainShape = shape[2]
 
@@ -84,10 +107,11 @@ Dyz = 0
 Uwind = [0.0, 2.0]*3.28  #wind vector + conversion m/s to ft/s
 
 gn   = (Dx(u(t,x,y,θ))^2 + Dy(u(t,x,y,θ))^2)^0.5 #gradient's norm
-∇u   = [Dx(u(t,x,y,θ)), Dy(u(t,x,y,θ))]
-∇z   = [Dxz,Dyz]
-n    = ∇u/gn              #normal versor
-normalized = ((Uwind[1]*n[1] + Uwind[2]*n[2])^2)^0.5 #(((Uwind[1]*Dx(u(t,x,y,θ))) + (Uwind[2]*Dy(u(t,x,y,θ))))^2)^0.5/(Dx(u(t,x,y,θ))^2 + Dy(u(t,x,y,θ))^2)^0.5
+∇u   = [Dx(u(t,x,y,θ)), Dy(u(t,x,y,θ))]          #level set's gradient
+∇z   = [Dxz,Dyz]          #terrain height's gradient
+n    = ∇u/gn              #level set's normal versor
+
+#(((Uwind[1]*Dx(u(t,x,y,θ))) + (Uwind[2]*Dy(u(t,x,y,θ))))^2)^0.5/(Dx(u(t,x,y,θ))^2 + Dy(u(t,x,y,θ))^2)^0.5
 
 ## FUEL PARAMETERS
 
@@ -124,12 +148,10 @@ Mf    = fuelmc_g
 
 tanϕ = sum(∇z.*n)
 βop  = 3.348*sigma^(-0.8189)        #from Rothermel, eq (37)
-
-U    = normalized                   #wind correction factor
+U    = ((Uwind[1]*n[1] + Uwind[2]*n[2])^2)^0.5    #wind correction factor
 w0   = wl/(1 + Mf)
 ρb   = w0/δm                        #different from paper for units reasons
 β    = ρb/ρP
-
 ξ    = exp((0.792 + 0.618*sigma^0.5)*(β+0.1))/(192 + 0.25965*sigma)
 ηs   = 0.174*(SE^(-0.19))           #probably a typo in the paper
 ηM   = 1 - 2.59*Mf/Mx + 5.11*(Mf/Mx)^2 - 3.52*(Mf/Mx)^3
@@ -165,20 +187,20 @@ zz(x,y) = (((xScale*(x-x0[1]))^2)*xSpread[1] + ((yScale*(y-y0[1]))^2)*ySpread[1]
 z_s     = [zz(x,y) for x in x_s for y in y_s]
 z_s     = reshape(z_s,(500,500))
 
-Plots.plot(x_s,y_s,z_s, st=:contour, levels = [0])
+Plots.plot(x_s,y_s,z_s, st=:surface)
 
-bcs = [u(tIgnition[1],x,y,θ) ~ initialCondition]  #from literature
+bcs = [u(tIgnition[1],x,y,θ) ~ initialCondition]  #LEVEL SET DIFFERENTIAL EQUATION
 
 
 ## NEURAL NETWORK
-n = 16
-maxIters = 800
+n = 16              #number of hidde neurons, currently must be < 28, best is 16
+maxIters1 = 800     #iteration number for the two training steps
+maxIters2 = 2000
 
 chain = FastChain(FastDense(3,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,1))
 q_strategy = NeuralPDE.QuadratureTraining(algorithm =CubaCuhre(),reltol=1e-8,abstol=1e-8,maxiters=100)
 
 discretization = NeuralPDE.PhysicsInformedNN([dt,dx,dy],chain,strategy = q_strategy)
-
 
 indvars = [t,x,y]
 
@@ -198,37 +220,37 @@ prob = discretize(pde_system, discretization)
 
 a_1 = time_ns()
 
-res = GalacticOptim.solve(prob, GalacticOptim.ADAM(0.08), cb = cb, maxiters=maxIters) #allow_f_increase = false,
+res = GalacticOptim.solve(prob, GalacticOptim.ADAM(0.085), cb = cb, maxiters=maxIters1) #allow_f_increase = false,
 initθ = res.minimizer
 
 discretization2 = NeuralPDE.PhysicsInformedNN([dt,dx,dy],chain, initθ; strategy = q_strategy)
 initθ == discretization2.initθ
 prob2 = NeuralPDE.discretize(pde_system,discretization2)
-res2 = GalacticOptim.solve(prob2, GalacticOptim.ADAM(0.001), cb = cb, maxiters=4000)
+res2 = GalacticOptim.solve(prob2, GalacticOptim.ADAM(0.0085), cb = cb, maxiters=maxIters2)
+
 b_1 = time_ns()
 print(string("Training time = ",(b_1-a_1)/10^9))
+
 initθ2 = res2.minimizer
 phi = discretization2.phi
 
 
-##QUICK VISUALIZATION with tStepFactor = 5
-maxIters = 4800
+##QUICK VISUALIZATION
+maxIters = maxIters1 + maxIters2 + 1
 
-losses = vcat(losses[1:4801])
-
-extrapolate  = true
+extrapolate  = false        #if false the result's grid is the training's grid, if true a scaled grid is used
 printBCSComp = true
 
-tStepFactor = 1 #Used to tune the time scale, if =tMeshNum/tmax the time step is the unit time
+tStepFactor = 5 #Used to tune the time scale, =1 means no scaling, if =tMeshNum/tmax the time step is the unit time
 FPS = 8
 
 if extrapolate
-    timeFactor  = 1 #used to extrapolate the prediction outside the domain
-    xAxisFactor = 1. #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
-    yAxisFactor = 1.
+    timeFactor  = 2.0 #used to extrapolate the prediction outside the domain
+    xAxisFactor = 1.25 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
+    yAxisFactor = 1.25
 else
     timeFactor  = 1 #used to extrapolate the prediction outside the domain
-    xAxisFactor = 1 #IF IsZeroCenter THE RESULTING DOMAIN WILL BE (xAxisFactor * yAxisFactor times)^2 TIMES LARGER !!!
+    xAxisFactor = 1
     yAxisFactor = 1
 end
 
@@ -239,28 +261,31 @@ elseif domainShape == shape[2]
     xs = -xwidth*0.5*xAxisFactor : dx : xwidth*0.5*xAxisFactor
     ys = -ywidth*0.5*yAxisFactor : dy : ywidth*0.5*yAxisFactor
 end
-ts = 2.9 : dt*tStepFactor : tmax*timeFactor
+ts = 0 : dt*tStepFactor : tmax*timeFactor
 
-u_predict = [reshape([first(phi([t,x,-y],res2.minimizer)) for x in xs for y in ys], (length(xs),length(ys))) for t in ts]
+u_predict = [reshape([first(phi([t,x,y],res2.minimizer)) for x in xs for y in ys], (length(xs),length(ys))) for t in ts]
 
 maxlim = maximum(maximum(u_predict[t]) for t = 1:length(ts))
 minlim = minimum(minimum(u_predict[t]) for t = 1:length(ts))
 
-result = @animate for time = 1:length(ts)
+result = @animate for time = 1:length(ts)       #3D animation of the levelset function
     Plots.plot(xs, ys, u_predict[time],st=:surface,camera=(30,30), zlim=(minlim,maxlim), clim=(minlim,maxlim),
                 title = string("ψ: max = ",round(maxlim, digits = 3)," min = ", round(minlim, digits = 3),"\\n t = ",
                 round((time - 1)/tMeshNum*tStepFactor*tmax, digits = 3)))
 end
-gif(result, "level_set_stage_final_surface.gif", fps = FPS)
+gif(result, "level_set_stage_5_surface.gif", fps = FPS)
 
-result_level = @animate for time = 1:length(ts)
-    Plots.contour(xs, ys, u_predict[time::Int], levels = [0], title = string("Fireline \\n t = ",
-    round((time - 1)/tMeshNum*tStepFactor*tmax, digits = 3)), legend = false, size = (600,600))
+if maxlim > 0 && minlim < 0
+    print("Fireline is present \\n")
+    result_level = @animate for time = 1:length(ts)
+        Plots.contour(xs, ys, u_predict[time::Int], levels = [0], title = string("Fireline \\n t = ",
+        round((time - 1)/tMeshNum*tStepFactor*tmax, digits = 3)), legend = false)
+    end
+    gif(result_level, "fireline.gif", fps = FPS)
+else
+    print("Fireline is not present \\n")    #in this case the level set is either always negative or always positive, so the result is meaningless
 end
 
-gif(result_level, "level_set_stage_final_contour.gif", fps = FPS)
-
-#
 if printBCSComp
     zbcs(x,y) = (((xScale*(x-x0[1]))^2)*xSpread[1] + ((yScale*(y-y0[1]))^2)*ySpread[1])^0.5 - amplitude[1]
 
@@ -280,21 +305,17 @@ if printBCSComp
 
     bcsFireline = Plots.contour(xs, ys, z_s, levels = [0], title = "BCS fireline ignition")
 
-    trainingPlot = Plots.plot(1:(maxIters + 1), losses, yaxis=:log, title = string("Training time = 647 s",
-        "\\n Iterations: ", maxIters, " Hidden neurons: ", n), ylabel = "log(loss)", legend = false)
+    trainingPlot = Plots.plot(1:(maxIters + 1), losses, yaxis=:log, title = string("Training time = ",round((b_1-a_1)/10^9), " s",
+        "\\n Iterations: ", maxIters - 1, " Hidden neurons: ", n), ylabel = "log(loss)", legend = false)
 
     bcsComparisonPlots = Plots.plot(bcsPlot, bcsPredict, bcsDiff, bcsFireline,bcsFirelinePredict, trainingPlot, size = (1500,600))
-    png(bcsComparisonPlots, "bcs_comparison_stage_final.png")
+    png(bcsComparisonPlots, "bcs_comparison_stage_5.png")
     bcsComparisonPlots
 end
 
 
 ## VISUALIZATION
-#=
-maxIters = 2801
-
 extrapolate  = false
-printBCSComp = true
 
 tStepFactor = 0.5
 
@@ -322,9 +343,9 @@ u_predict = [reshape([first(phi([t,x,y],res2.minimizer)) for x in xs for y in ys
 
 maxlim = maximum(maximum(u_predict[t]) for t = 1:length(ts))
 minlim = minimum(minimum(u_predict[t]) for t = 1:length(ts))
-=#
 
-tensor = readdlm("/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Julia_implementation/LevelSetEq/WRF Out one fire/tensor.txt")
+
+tensor = readdlm("tensor.txt")
 tensor = reshape(tensor, (420,420,31))
 tensor = permutedims(tensor, [2,1,3])
 
@@ -334,33 +355,29 @@ tensor = permutedims(tensor, [2,1,3])
 xs =  0 : dx*40 : 400
 ys =  0 : dx*40 : 400
 
-timel = 1
+timel = 10
 
-#=
-gif_tensor = @animate for time = 1:31
-    Plots.plot(tensor[:,:,time], legend = false, levels = [0.01], size = (600,600))
-end
-gif(gif_tensor, "WRF_out_one_fire.gif", fps = FPS)
-=#
 
-for i = 1:7
-    tensor_p = Plots.contour(tensor[:,:,i*4], levels = [0.01], tick = false, grid = false, size = (600,600))
-    pred_p   = Plots.contour(xs, ys, u_predict[i], levels = [0], tick = false, grid = false, size = (600,600))
+tensor_p = Plots.contour(tensor[:,:,timel], levels = [0.01], tick = false, grid =false, size = (600,600))
+Plots.savefig(tensor_p,"wrf_tensor.png")
+pred_p = Plots.contour(xs, ys, u_predict[timel], levels = [0], tick = false, grid = false, size = (600,600))
+Plots.savefig(pred_p, "PINN.png")
 
-    Plots.savefig(tensor_p, string("/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Julia_implementation/LevelSetEq/WRF_tensor/wrf_tensor_",i,".png"))
-    Plots.savefig(pred_p, string("/media/mljc/BAY_1_4TB/DEV/ProjectX2020/ProjectX2020/Julia_implementation/LevelSetEq/level_set_final/level_set_final_",i,".png"))
-end
 
 h_tensor = heatmap(tensor_p)
 h_pred = heatmap(u_predict[1],levels = [0.6])
 
 
 ##SAVED PARAMETERS
-param = initθ2
+param_non_eseguire = initθ2
 
-outfile = "params_level_set_stage_final_4800iter.txt"
+outfile = "params_level_set_stage_5.txt"
 open(outfile, "w") do f
-  for i in param
+  for i in param_non_eseguire_1
     println(f, i)
   end
 end
+
+##
+##
+##
