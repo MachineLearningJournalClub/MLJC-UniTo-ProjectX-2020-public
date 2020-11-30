@@ -18,7 +18,7 @@ A collection of our attempts to find a proper model which suites all of our need
 ### [Interpolation](/BC_Interpolation)
 Some utility notebooks needed to implement key informations (terrain slope, wind field) in our model. It also provides better perfomances in terms of speed and computational load.
 <p align="center">
-  <img src="/BC_Interpolation/Interpolation_Example/ExampleScalar2D.png">
+  <img src="BC_Interpolation/IsomCreek_Alt/fit1/interpolation_plot_1.png">
 </p>
 
 ### [WRF](/WRF)
