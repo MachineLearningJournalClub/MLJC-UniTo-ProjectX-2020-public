@@ -263,7 +263,7 @@ Plots.plot(xs, ys, initial_cond, st=:surface)
 
 #------------------TRAINING TESTS WITH PARABOLIC BCS---------------
 
-#-------TEST 1 ---------------
+#-------Preliminary test (problem correctly described, testing training speed)--------
 #Training started at 13:25 - ADAM(0.022) - 3.500 iterations
 #Training finished at 15:02 loss 10^7 => 545.79
 #
