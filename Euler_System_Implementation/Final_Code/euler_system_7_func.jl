@@ -242,7 +242,7 @@ discretization2 = NeuralPDE.PhysicsInformedNN([dx,dy,dη,dt],chain, initθ; stra
 initθ == discretization2.initθ
 prob2 = NeuralPDE.discretize(pde_system,discretization2)
 res2 = GalacticOptim.solve(prob2, ADAM(0.01), cb = cb, maxiters=1000)
-phi = discretization.phi
+phi = discretization2.phi
 
 ##OUTPUTS 
 xs,ys,ηs,ts = [domain.domain.lower:dx:domain.domain.upper for (dx,domain) in zip([dx,dy,dη,dt],domains)]
@@ -250,7 +250,7 @@ xs,ys,ηs,ts = [domain.domain.lower:dx:domain.domain.upper for (dx,domain) in zi
 u_predict  = [reshape([phi([x,y,η,t],res2.minimizer)[i] for x in xs for y in ys for η in ηs for t in ts],
               (length(xs),length(ys),length(ηs),length(ts))) for i in 1:7]
 
-
+##TRAINING LOSS PLOT
 Plots.plot(listTraining[3:end], yaxis=:log, ylabel="Loss function", xlabel="Epochs (ADAM)", legend=false, title="Training")
 Plots.savefig("euler_training_test.pdf")
 
