@@ -364,8 +364,8 @@ xs,ys,ηs,ts = [domain.domain.lower:dx:domain.domain.upper for (dx,domain) in zi
 u_predict  = [reshape([phi([x,y,η,t],res18.minimizer)[i] for x in xs for y in ys for η in ηs for t in ts],
               (length(xs),length(ys),length(ηs),length(ts))) for i in 1:6]
 
-u_predict
 
+##TRAINING LOSS PLOT
 Plots.plot(listTraining[3:end], yaxis=:log, ylabel="Loss function", xlabel="Epochs (ADAM)", legend=false, title="Training")
 Plots.savefig("euler_training_test_18_steps.pdf")
 
