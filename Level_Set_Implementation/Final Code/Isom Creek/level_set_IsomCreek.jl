@@ -311,7 +311,7 @@ if printBCSComp
     bcsFireline = Plots.contour(xs, ys, z_s, levels = [0], title = "BCS fireline ignition")     #target initial fireline
 
     trainingPlot = Plots.plot(1:(maxIters + 1), losses, yaxis=:log, title = string("Training time = 270 s",
-        "\\n Iterations: ", maxIters, "   NN: 16>16>16"), ylabel = "log(loss)", legend = false) #loss plot
+        "\\n Iterations: ", maxIters, "   NN: 3>16>1"), ylabel = "log(loss)", legend = false) #loss plot
 
     bcsComparisonPlots = Plots.plot(bcsPlot, bcsPredict, bcsDiff, bcsFireline,bcsFirelinePredict, trainingPlot, size = (1500,600))
     Plots.savefig("isom_creek_bcs_comparison.pdf")
