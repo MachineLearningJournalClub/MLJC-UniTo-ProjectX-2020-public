@@ -84,7 +84,7 @@ ps = 10 #dummy
 pt = 1 #dummy
 pd = B*(ps - pt) + (η - B)*(p0 - pt) + pt
 μd = (ps - pt)*(c2 + 2*c3*η + 3*c4*η*η) + (p0 - pt)*(1 - c2 - 2*c3*η - 3*c4*η*η) #[μd = Dη(pd)]
-D2pd = (ps - pt)*(2*c3 + 6*c4*η) + (p0 - pt)*(-2*c3 - 6*c4*η) # (maybe find η as a function of pd)
+D2pd = (ps - pt)*(2*c3 + 6*c4*η) + (p0 - pt)*(-2*c3 - 6*c4*η)
 #ω  = Dt(η)
 U  = μd*u/my
 V  = μd*v/mx
