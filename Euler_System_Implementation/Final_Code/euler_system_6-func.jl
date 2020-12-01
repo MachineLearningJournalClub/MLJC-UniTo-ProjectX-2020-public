@@ -20,7 +20,7 @@
 # Compiler: Julia 1.5
 
 # Short description of this file: Implementation of Euler system with 6 target
-#functions: we eliminated ω because we consider η as a constant.
+#functions: we eliminated ω because we consider η as an independent variable.
 
 using NeuralPDE, Flux, ModelingToolkit, GalacticOptim, Optim, DiffEqFlux
 using Plots, PyPlot
@@ -65,7 +65,7 @@ sum_of_qs = 0.1 #read from file
 Δy = 1 #dummy
 
 #scale factors
-dist = x^2 + y^2 #dummy for distance on earth (MANFRIN's advice)
+dist = x^2 + y^2 #dummy for distance on earth
 Dxd  = 2*x #Dx(dist)
 Dyd  = 2*y #Dy(dist)
 mx   = Δx/dist
@@ -83,7 +83,7 @@ ps = 10 #dummy
 pt = 1 #dummy
 pd = B*(ps - pt) + (η - B)*(p0 - pt) + pt
 μd = (ps - pt)*(c2 + 2*c3*η + 3*c4*η*η) + (p0 - pt)*(1 - c2 - 2*c3*η - 3*c4*η*η) #[μd = Dη(pd)]
-D2pd = (ps - pt)*(2*c3 + 6*c4*η) + (p0 - pt)*(-2*c3 - 6*c4*η) # (maybe find η as a function of pd)
+D2pd = (ps - pt)*(2*c3 + 6*c4*η) + (p0 - pt)*(-2*c3 - 6*c4*η)
 U  = μd*u/my
 V  = μd*v/mx
 W  = μd*w/my
@@ -100,6 +100,7 @@ Qm = μd*qm
 #divVθm = Dx(U*θm) + Dy(V*θm) + Dη(Ω*θm)
 #divV   = Dx(V)    + Dy(V)    + Dη(V)
 #divVqm = Dx(U*qm) + Dy(V*qm) + Dη(Ω*qm)
+
 divVu1 = μd*u/Δy*(u*Dxd + 2*dist*Dx(u))
 divVu2 = μd/Δx*(u*v*Dyd + dist*u*Dy(v) + dist*v*Dy(u))
 divVu3 = 0 #dist/Δy*(D2pd*u*ω + μd*Dη(u)*ω + μd*u*Dη(ω))
@@ -133,7 +134,7 @@ divVqm3 = 0 #1/my*(D2pd*ω*qm + μd*Dη(ω)*qm   + μd*ω*Dη(qm))
 divVqm  = divVqm1 +divVqm2 + divVqm3
 
 #inner products
-innerV∇ϕ = U*g*Dx(z) + V*g*Dy(z) #U*Dx(ϕ) + V*Dy(ϕ) + Ω*Dη(ϕ)
+innerV∇ϕ = U*g*Dx(z) + V*g*Dy(z)
 
 
 #geographic parametrization
@@ -157,14 +158,6 @@ FQm = 0 #dummy
 
 
 #equations (Flux-Form Euler)
-#eq1 = Dt(U) + divVu + μd*α*Dx(p) + (α/αd)*Dη(p)*Dx(ϕ) ~ FU
-#eq2 = Dt(V) + divVv + μd*α*Dy(p) + (α/αd)*Dη(p)*Dy(ϕ) ~ FV
-#eq3 = Dt(W) + divVw - g*((α/αd)*Dη(p) - μd)           ~ FW
-#eq4 = Dt(Θm) + divVθm                                 ~ FΘm
-#eq5 = Dt(μd) + divV                                   ~ 0
-#eq6 = Dt(ϕ)  + (1/μd)*(innerV∇ϕ - g*W)                ~ 0
-#eq7 = Dt(Qm) + divVqm                                 ~ FQm
-
 eq1 = μd/my*Dt(u) + divVu + μd*α*p0*(Rd/(p0*αd))^γ*γ*θm^(γ-1)*Dx(θm) + (α/αd)*p0*(Rd/(p0*αd))^γ*γ*θm^(γ-1)*Dη(θm)*g*Dx(z) ~ FU
 eq2 = μd/mx*Dt(v) + divVv + μd*α*p0*(Rd/(p0*αd))^γ*γ*θm^(γ-1)*Dy(θm) + (α/αd)*p0*(Rd/(p0*αd))^γ*γ*θm^(γ-1)*Dη(θm)*g*Dy(z) ~ FV
 eq3 = μd/my*Dt(w) + divVw - g*((α/αd)*p0*(Rd/(p0*αd))^γ*γ*θm^(γ-1)*Dη(θm) - μd)                                           ~ FW
@@ -225,9 +218,6 @@ chain = FastChain(FastDense(input_,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n
 q_strategy = NeuralPDE.QuadratureTraining(algorithm =CubaCuhre(),reltol=1e-8,abstol=1e-8,maxiters=150)
 discretization = NeuralPDE.PhysicsInformedNN([dx,dy,dη,dt],chain,strategy = q_strategy)
 
-#discretization = NeuralPDE.PhysicsInformedNN([dx,dy,dη,dt],
-#                                             chain,
-#                                             strategy = NeuralPDE.StochasticTraining())
 pde_system = PDESystem(eqs,bcs,domains,[x,y,η,t],[u1,u2,u3,u4,u5,u6])
 prob = NeuralPDE.discretize(pde_system,discretization)
 
@@ -246,29 +236,25 @@ discretization2 = NeuralPDE.PhysicsInformedNN([dx,dy,dη,dt],chain, initθ; stra
 initθ == discretization2.initθ
 prob2 = NeuralPDE.discretize(pde_system,discretization2)
 res2 = GalacticOptim.solve(prob2, ADAM(0.001), progress = true, cb = cb, maxiters=1000)
-#res2 = GalacticOptim.solve(prob, p = res.minimizer,  ADAM(0.01), cb=cb, maxiters=10)
-phi = discretization.phi
+phi = discretization2.phi
 
-
+##OUTPUTS
 xs,ys,ηs,ts = [domain.domain.lower:dx:domain.domain.upper for (dx,domain) in zip([dx,dy,dη,dt],domains)]
-
-#u_predict = [reshape([first(phi([x,y,η,t],res.minimizer)) for x in xs  for y in ys for η in ηs], (length(xs),length(ys),length(ηs)))  for t in ts ]
 
 u_predict  = [reshape([phi([x,y,η,t],res2.minimizer)[i] for x in xs for y in ys for η in ηs for t in ts],
               (length(xs),length(ys),length(ηs),length(ts))) for i in 1:6]
 
-u_predict
-
+##TRAINING LOSS PLOT
 Plots.plot(listTraining[3:end], yaxis=:log, ylabel="Loss function", xlabel="Epochs (ADAM)", legend=false, title="Training")
 Plots.savefig("euler_training_test_2.pdf")
 
-
+##BCS PLOTS
 ic(x,y) = (x - x0)^2 + (y - y0)^2
 initial_cond = reshape([ic(x,y) for x in xs for y in ys], (length(xs),length(ys)))
 Plots.plot(xs, ys, initial_cond, st=:surface)
 Plots.plot(xs, ys, u_predict[1][:,:,1,1], st=:surface)
 
-
+##OUTPUT PLOTS
 maxlim = maximum(maximum(u_predict[1][:,:,1,t]) for t = 1:length(ts))
 minlim = minimum(minimum(u_predict[1][:,:,1,t]) for t = 1:length(ts))
 
