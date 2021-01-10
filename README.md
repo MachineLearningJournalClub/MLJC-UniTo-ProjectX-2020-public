@@ -40,7 +40,7 @@ Later we ran several simulations of fire and atmospherical events. We then kept 
 The level-set is the mathematical core for calculating the spread of the fire.  The minimization of the loss functions is the process that actually solves the PDE and constitutesthe  main  load  for  the  CPU.  It  can  be  easily  accelerated  using GPUs. The  model  was  implemented  using  the  low-level  interface of the [NeuralPDE.jl](https://github.com/SciML/NeuralPDE.jl) library which contains the necessary methods for the generation of the training datasets and of theloss functions starting from the explicit form of the equations and the boundary conditions.
 
 
-Level set equation solution computed by PINNs                           |  Level set equation solution computed by WRF
+Level set equation solution computed by PINNs                         |  Level set equation solution computed by WRF
 :-----------------------------------------------:|:-------------------------:
 ![](/Visualizations/Level%20set%20quantitative/One%20Fire/D3_PDF/contour_pinn_one_fire_evolution.png)  |  ![](Visualizations/WRF/Time%20evolution/contour_wrf_one_fire_evolution.png)
 
