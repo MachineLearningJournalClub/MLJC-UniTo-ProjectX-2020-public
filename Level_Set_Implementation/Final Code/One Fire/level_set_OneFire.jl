@@ -67,10 +67,10 @@ dt  = tmax/tMeshNum
 shape      = ["zeroIsVertex","zeroIsCenter"]
 x0         = [0.3]      #Fire ingnition coordinates
 y0         = [0.0]
-xSpread    = [5.0]      #Fire shape factors
-ySpread    = [0.15]
+xSpread    = [1.0]  #[5.0]      #Fire shape factors
+ySpread    = [2.0] #[0.15]
 tIgnition  = [0.0]      #Fire's time of ignition
-amplitude  = [0.2]      #Fire's initial spread (radius if circle)
+amplitude  = [2.0]  #[0.2]      #Fire's initial spread (radius if circle)
 
 domainShape = shape[2]
 
@@ -95,6 +95,7 @@ Dyz = 0
 Uwind = [0.0, 2.0]  #wind vector
 
 gn   = (Dx(u(t,x,y,θ))^2 + Dy(u(t,x,y,θ))^2)^0.5 #gradient's norm
+
 ∇u   = [Dx(u(t,x,y,θ)), Dy(u(t,x,y,θ))]
 ∇z   = [Dxz,Dyz]
 n    = ∇u/gn              #normal versor
@@ -118,8 +119,8 @@ weight = [7.,  7.,  7., 180., 100., 100., 100., 900., 900., 900., 900., 900., 90
 FuelNumber = 3
 
 a     = windrf[FuelNumber]          #those numbers should be dependent on position
-zf    =
-z0    =
+#zf    =
+#z0    =
 w     = weight[FuelNumber]/60               #seconds to minutes
 wl    = fgi[FuelNumber]*0.204816144         #kg*m^-2 to lb*ft^-2
 δm    = fueldepthm[FuelNumber]*3.28084      #m to ft
@@ -133,7 +134,7 @@ Mf    = fuelmc_g
 
 ## FIRE SPREAD RATE EQUATIONS
 
-river_1 = 1 - 1/(1 + exp(-(x - r0)*1000))=#
+#river_1 = 1 - 1/(1 + exp(-(x - r0)*1000))
 tanϕ = sum(∇z.*n)
 βop  = 3.348*sigma^(-0.8189)        #from Rothermel, eq (37)
 U    = normalized                   #wind correction factor
@@ -156,7 +157,8 @@ IR   = Γ*wn*h*ηM*ηs
 R0   = IR*ξ/(ρb*ϵ*Qig)              #spread rate without wind
 ϕw   = C*max(Ua^β, (β/βop)^E)       #wind factor
 ϕS   = 5.275*β^(-0.3)*tanϕ^2        #slope factor
-S    = fuel_scale*R0*(1 + ϕw + ϕS)         #fire spread rate
+fuel_scale = 10000
+S    = fuel_scale*R0*(1 + ϕw + ϕS)  #fire spread rate
 
 eq = Dt(u(t,x,y,θ)) + S*gn ~ 0      #LEVEL SET EQUATION
 
@@ -170,6 +172,16 @@ if length(x0) > 2
     end
 end
 =#
+
+
+# Initial condition plot
+x_s     = [x for x in xs][1:end-1]
+y_s     = [y for y in ys][1:end-1]
+ttt(x,y) = (((xScale*(x-x0[1]))^2)*xSpread[1] + ((yScale*(y-y0[1]))^2)*ySpread[1])^0.5 - amplitude[1]
+z_s     = [ttt(x,y) for x in x_s for y in y_s]
+z_s     = reshape(z_s,(500,500))
+
+Plots.plot(x_s,y_s,z_s, st=:surface, xlabel="x", ylabel="y", zlabel="ψ")
 
 bcs = [u(tIgnition[1],x,y,θ) ~ initialCondition]  #from literature
 
