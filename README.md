@@ -55,7 +55,8 @@ This is our attempt to implement the atmospherical model of WRF using PINNS ([Ne
 ### [Link to Google Drive](https://drive.google.com/drive/folders/1wUCKUyVwC0Pf-e9WlLiqOxRLF0or2D0U)
 In the Google Drive linked above are hosted the results of the simulations performed with WRF. The results are in the standard NetCDF format and can be explored easily using the [Ncview tool](http://meteora.ucsd.edu/~pierce/ncview_home_page.html).
 
-
+### Code compatibility
+All the code included is compatible with the Julia version 1.5.2.
 
 
 
