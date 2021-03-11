@@ -189,7 +189,6 @@ bcs = [u(tIgnition[1],x,y,θ) ~ initialCondition]  #from literature
 ## NEURAL NETWORK
 n = 16   #neuron number
 maxIters = 3000     #number of iterations
-
 chain = FastChain(FastDense(3,n,Flux.σ),FastDense(n,n,Flux.σ),FastDense(n,1))   #Neural network from Flux library
 
 q_strategy = NeuralPDE.QuadratureTraining(algorithm =CubaCuhre(),reltol=1e-8,abstol=1e-8,maxiters=100)  #Training strategy
