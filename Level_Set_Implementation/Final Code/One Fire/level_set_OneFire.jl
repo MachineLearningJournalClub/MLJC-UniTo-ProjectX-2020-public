@@ -67,10 +67,10 @@ dt  = tmax/tMeshNum
 shape      = ["zeroIsVertex","zeroIsCenter"]
 x0         = [0.3]      #Fire ingnition coordinates
 y0         = [0.0]
-xSpread    = [1.0]  #[5.0]      #Fire shape factors
-ySpread    = [2.0] #[0.15]
+xSpread    = [5.0]      #Fire shape factors
+ySpread    = [0.15]
 tIgnition  = [0.0]      #Fire's time of ignition
-amplitude  = [2.0]  #[0.2]      #Fire's initial spread (radius if circle)
+amplitude  = [0.2]      #Fire's initial spread (radius if circle)
 
 domainShape = shape[2]
 
