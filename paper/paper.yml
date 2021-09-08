@@ -1,0 +1,33 @@
+title: "Testing the Julia SciML ecosystem through Physics-Informed Machine Learning applied to wildfire propagation"
+keywords:
+  - Julia
+  - NeuralPDE.jl
+  - Physics Informed Machine Learning
+  - Dynamical Systems
+authors:
+  - name: Luca Bottero
+    affiliation: 1
+  - name: Francesco Calisto
+    orcid: 0000-0003-4026-7239
+    affiliation: 1
+  - name: Giovanni Graziano
+    affiliation: 1
+  - name: Valerio Pagliarino
+    orcid: 0000-0003-3647-9335
+    affiliation: 1
+  - name: Martina Scauda
+    affiliation: 2
+  - name: Sara Tiengo
+    affiliation: 1
+  - name: Simone Azeglio
+    affiliation: 1,3
+    
+affiliations:
+  - name: University of Turin, Department of Physics
+    index: 1
+  - name: University of Turin, Department of Mathematics
+    index: 2
+  - name: University of Ottawa
+    index: 3
+date: 8 April 2021
+bibliography: ref.bib
